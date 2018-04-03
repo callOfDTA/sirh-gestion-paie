@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package'
+                sh 'mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package -Dmaven.test.failure.ignore=true'
             }
         }
         stage('quality') {
