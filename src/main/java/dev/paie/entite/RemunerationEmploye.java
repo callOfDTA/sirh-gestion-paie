@@ -1,11 +1,20 @@
 package dev.paie.entite;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+
 public class RemunerationEmploye {
 	
+
 	private Integer id;
+
 	private String matricule;
+
 	private Entreprise entreprise;
+
 	private ProfilRemuneration profilRemuneration;
+
 	private Grade grade;
 	
 	public String getMatricule() {
