@@ -2,14 +2,18 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd 
 http://www.springframework.org/schema/util
-http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+http://www.springframework.org/schema/util/spring-util.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- importer une configuration dans une autre -->
 	<import resource="classpath:cotisations-imposables.xml" />
 	<import resource="classpath:cotisations-non-imposables.xml" />
+
 
 
 	<bean id="bulletin1" class="dev.paie.entite.BulletinSalaire">
@@ -49,23 +53,23 @@ http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 		<property name="cotisationsNonImposables">
 			<util:list value-type="dev.paie.entite.Cotisation">
 				<ref bean="ep01" />
-                <ref bean="ep02" />
-                <ref bean="ep03" />
-                <ref bean="ep04" />
-                <ref bean="ep05" />
-                <ref bean="ep06" />
-                <ref bean="ep07" />
-                <ref bean="ep12" />
-                <ref bean="ep14" />
-                <ref bean="ep19" />
-                <ref bean="ep20" />
-                <ref bean="ep21" />
-                <ref bean="ep28" />
-                <ref bean="ep37" />
-                <ref bean="epr1" />
-                <ref bean="epr2" />
-                <ref bean="e900" />
-                <ref bean="e901" />
+				<ref bean="ep02" />
+				<ref bean="ep03" />
+				<ref bean="ep04" />
+				<ref bean="ep05" />
+				<ref bean="ep06" />
+				<ref bean="ep07" />
+				<ref bean="ep12" />
+				<ref bean="ep14" />
+				<ref bean="ep19" />
+				<ref bean="ep20" />
+				<ref bean="ep21" />
+				<ref bean="ep28" />
+				<ref bean="ep37" />
+				<ref bean="epr1" />
+				<ref bean="epr2" />
+				<ref bean="e900" />
+				<ref bean="e901" />
 			</util:list>
 		</property>
 	</bean>
