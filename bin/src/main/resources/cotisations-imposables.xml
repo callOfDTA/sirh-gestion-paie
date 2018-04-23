@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
-
+	
 	<!-- cotisations imposables -->
 
 	<bean id="sp01" class="dev.paie.entite.Cotisation">
