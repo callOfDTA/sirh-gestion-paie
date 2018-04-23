@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+	<context:component-scan base-package="dev.paie"></context:component-scan>
+	<!-- exemple de valorisation de liste <bean id="profil1" class="dev.paie.entite.ProfilRemuneration"> 
+		<property name="cotisationsNonImposables"> <util:list value-type="dev.paie.entite.Cotisation"> 
+		<ref bean="ep01" /> </util:list> </property> </bean> -->
+	<!-- importer une configuration dans une autre -->
+	<import resource="classpath:cotisations-imposables.xml" />
+	<import resource="classpath:cotisations-non-imposables.xml" />
+
+
+	<bean id="profil1" class="dev.paie.entite.ProfilRemuneration">
+		<property name="cotisationsImposables">
+			<util:list value-type="dev.paie.entite.Cotisation">
+				<ref bean="sp01" />
+				<ref bean="sp02" />
+			</util:list>
+		</property>
+		<property name="cotisationsNonImposables">
+			<util:list value-type="dev.paie.entite.Cotisation">
+				<ref bean="ep01" />
+				<ref bean="ep02" />
+				<ref bean="ep03" />
+				<ref bean="ep04" />
+				<ref bean="ep05" />
+				<ref bean="ep06" />
+				<ref bean="ep07" />
+				<ref bean="ep12" />
+				<ref bean="ep14" />
+				<ref bean="ep19" />
+				<ref bean="ep20" />
+				<ref bean="ep21" />
+				<ref bean="ep28" />
+				<ref bean="ep37" />
+				<ref bean="epr1" />
+				<ref bean="epr2" />
+				<ref bean="e900" />
+				<ref bean="e901" />
+			</util:list>
+		</property>
+		<property name="avantages">
+			<util:list value-type="dev.paie.entite.Avantage">
+			</util:list>
+		</property>
+	</bean>
+	<bean id="grade1" class="dev.paie.entite.Grade">
+		<property name="nbHeuresBase" value="151.67"></property>
+		<property name="tauxBase" value="11.0984"></property>
+	</bean>
+	<bean id="entre1" class="dev.paie.entite.Entreprise">
+		<property name="siret" value="80966785000022"></property>
+		<property name="denomination" value="Dev Entreprise"></property>
+		<property name="codeNaf" value="6202A"></property>
+	</bean>
+	<bean id="remu1" class="dev.paie.entite.RemunerationEmploye">
+		<property name="matricule" value="M01"></property>
+		<property name="grade" ref="grade1"></property>
+		<property name="entreprise" ref="entre1"></property>
+		<property name="profilRemuneration" ref="profil1"></property>
+	</bean>
+	<bean id="periode1" class="dev.paie.entite.Periode"></bean>
+	<bean id="bulletin1" class="dev.paie.entite.BulletinSalaire">
+		<property name="remunerationEmploye" ref="remu1" />
+		<property name="primeExceptionnelle" value="1000" />
+		<property name="periode" ref="periode1"></property>
+	</bean>
+</beans>
