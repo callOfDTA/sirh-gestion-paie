@@ -7,8 +7,8 @@ public class Cotisation {
 	private Integer id;
 	private String code;
 	private String libelle;
-	private BigDecimal tauxSalarial;
-	private BigDecimal tauxPatronal;
+	private BigDecimal tauxSalarial = BigDecimal.valueOf(0.00);
+	private BigDecimal tauxPatronal = BigDecimal.valueOf(0.00);
 	
 	
 	public String getCode() {
