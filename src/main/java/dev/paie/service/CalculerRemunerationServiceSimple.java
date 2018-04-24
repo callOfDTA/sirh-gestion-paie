@@ -68,9 +68,11 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 		for (int i = 0; i < profil1.getCotisationsImposables().size(); i++) {
 			if(profil1.getCotisationsImposables().get(i).getTauxSalarial() != null){
 				cotimpo = cotimpo.add(profil1.getCotisationsImposables().get(i).getTauxSalarial().multiply(salaireBrut));
-				netapayer = netapayer.subtract(cotimpo);
+				
 			}
+			
 			}
+		netapayer = netapayer.subtract(cotimpo);
 		rcr.setNetAPayer(pu.formaterBigDecimal(netapayer).toString());
 		return rcr;
 	}
