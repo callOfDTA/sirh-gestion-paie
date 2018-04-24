@@ -8,8 +8,11 @@ import org.springframework.stereotype.Service;
 import dev.paie.entite.BulletinSalaire;
 import dev.paie.entite.Cotisation;
 import dev.paie.entite.ResultatCalculRemuneration;
+import dev.paie.util.PaieUtils;
 @Service
 public class CalculerRemunerationServiceSimple implements CalculerRemunerationService {
+
+	PaieUtils pu = new PaieUtils();
 
 	@Override
 	
@@ -20,15 +23,16 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 		BigDecimal total_retenue = BigDecimal.ZERO;
 		BigDecimal cotis_patronales = BigDecimal.ZERO;
 		List<Cotisation> cotisSal = bulletin.getRemunerationEmploye().getProfilRemuneration().getCotisationsImposables();
-		cotisSal.removeIf(c -> c.getTauxSalarial()!=null);		
+		List<Cotisation> cotisPat = bulletin.getRemunerationEmploye().getProfilRemuneration().getCotisationsImposables();
+		cotisSal.removeIf(c -> c.getTauxSalarial()==null);
+		cotisPat.removeIf(c -> c.getTauxPatronal()==null);
 		cotisSal.forEach(c -> total_retenue.add(salaireBrut.multiply(c.getTauxSalarial())));
-		bulletin.getRemunerationEmploye().getProfilRemuneration().getCotisationsNonImposables().forEach(c -> total_retenue.add(salaireBrut.multiply(c.getTauxPatronal())));
+		cotisPat.forEach(c -> total_retenue.add(salaireBrut.multiply(c.getTauxPatronal())));
 		BigDecimal net_imposable = salaireBrut.subtract(total_retenue);
-		
 		BigDecimal deductions = BigDecimal.ZERO;
 		bulletin.getRemunerationEmploye().getProfilRemuneration().getCotisationsImposables().forEach(c -> deductions.add(salaireBrut.multiply(c.getTauxSalarial())));
 		BigDecimal net_a_payer = net_imposable.subtract(deductions);
-		ResultatCalculRemuneration rc = new ResultatCalculRemuneration(salaireBase.toString(), salaireBrut.toString(), total_retenue.toString(), cotis_patronales.toString(), net_imposable.toString(), net_a_payer.toString());
+		ResultatCalculRemuneration rc = new ResultatCalculRemuneration(pu.formaterBigDecimal(salaireBase), pu.formaterBigDecimal(salaireBrut), pu.formaterBigDecimal(total_retenue), pu.formaterBigDecimal(cotis_patronales), pu.formaterBigDecimal(net_imposable), pu.formaterBigDecimal(net_a_payer));
 		return rc;
 	}
 
