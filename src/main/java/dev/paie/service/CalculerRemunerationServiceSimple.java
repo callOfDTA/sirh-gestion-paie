@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import dev.paie.entite.BulletinSalaire;
 import dev.paie.entite.Cotisation;
+import dev.paie.entite.Grade;
 import dev.paie.entite.ResultatCalculRemuneration;
 
 /**
@@ -22,14 +23,20 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 	@Override
 	public ResultatCalculRemuneration calculer(BulletinSalaire bulletin) {
 
-		BigDecimal nbHeuresBase = bulletin.getRemunerationEmploye().getGrade().getNbHeuresBase();
-		BigDecimal tauxBase = bulletin.getRemunerationEmploye().getGrade().getTauxBase();
-		BigDecimal salaireBase = nbHeuresBase.multiply(tauxBase);
+		
+		ResultatCalculRemuneration remu = new ResultatCalculRemuneration();
+		Grade grade = bulletin.getRemunerationEmploye().getGrade();
+		
+		// SALAIRE_BASE = GRADE.NB_HEURES_BASE * GRADE.TAUX_BASE
+		BigDecimal salaireBase = grade.getNbHeuresBase().multiply(grade.getTauxBase());
 
-		BigDecimal primeExceptionnelle = bulletin.getPrimeExceptionnelle();
-		BigDecimal salaireBrut = nbHeuresBase.add(primeExceptionnelle);
+		// SALAIRE_BRUT = SALAIRE_BASE + PRIME_EXCEPTIONNELLE
+		BigDecimal salaireBrut = salaireBase.add(bulletin.getPrimeExceptionnelle());
 
 		BigDecimal totalRetenueSalarial = BigDecimal.ZERO;
+		BigDecimal totalCotisationsPatronales = BigDecimal.ZERO;
+		
+		// TOTAL_RETENUE_SALARIALE = SOMME(COTISATION_NON_IMPOSABLE.TAUX_SALARIAL*SALAIRE_BRUT)
 		List<Cotisation> cotisationNonImposable = bulletin.getRemunerationEmploye().getProfilRemuneration()
 				.getCotisationsNonImposables();
 		for (Cotisation cotiNonImpo : cotisationNonImposable) {
@@ -38,13 +45,15 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 			}
 		}
 
-		BigDecimal totalCotisationsPatronales = BigDecimal.ZERO;
+		// TOTAL_COTISATIONS_PATRONALES =
+					//		SOMME(COTISATION_NON_IMPOSABLE.TAUX_PATRONAL*SALAIRE_BRUT)
 		for (Cotisation cotiNonImpo : cotisationNonImposable) {
 			if (cotiNonImpo.getTauxSalarial() != null) {
-				totalCotisationsPatronales.add(cotiNonImpo.getTauxPatronal().multiply(salaireBrut));
+				totalCotisationsPatronales.add(cotiNonImpo.getTauxSalarial().multiply(salaireBrut));
 			}
 		}
 
+		// NET_IMPOSABLE = SALAIRE_BRUT - TOTAL_RETENUE_SALARIALE
 		BigDecimal netImposable = salaireBrut.subtract(totalRetenueSalarial);
 
 		BigDecimal totalRetenueSalarialeImposable = BigDecimal.ZERO;
@@ -55,6 +64,8 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 				totalRetenueSalarialeImposable.add(cotiImpo.getTauxSalarial().multiply(salaireBrut));
 			}
 		}
+		
+		// NET_A_PAYER = NET_IMPOSABLE - SOMME(COTISATION_IMPOSABLE.TAUX_SALARIAL*SALAIRE_BRUT)
 		BigDecimal netAPayer = netImposable.subtract(totalRetenueSalarialeImposable);
 
 		ResultatCalculRemuneration rsr = new ResultatCalculRemuneration();
