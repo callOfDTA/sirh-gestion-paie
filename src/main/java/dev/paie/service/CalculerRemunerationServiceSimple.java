@@ -21,14 +21,11 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 	
 	PaieUtils pu = new PaieUtils();
 	
-	@Autowired
-	private Grade grade;
-	
-	@Autowired
-	private ProfilRemuneration profil;
-	
 	@Override
 	public ResultatCalculRemuneration calculer(BulletinSalaire bulletin) {
+		
+		Grade grade = bulletin.getRemunerationEmploye().getGrade();
+		
 		BigDecimal sal = grade.getTauxBase().multiply(grade.getNbHeuresBase());
 		result.setSalaireDeBase(pu.formaterBigDecimal(sal).toString());
 		
@@ -38,6 +35,7 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 		
 		
 		BigDecimal retenueSal = new BigDecimal("0");
+		ProfilRemuneration profil = bulletin.getRemunerationEmploye().getProfilRemuneration();
 		for(int i = 0; i < profil.getCotisationsNonImposables().size(); i++){
 			if(profil.getCotisationsNonImposables().get(i).getTauxSalarial() != null) {
 				retenueSal = retenueSal.add(profil.getCotisationsNonImposables().get(i).getTauxSalarial().multiply(salBrut));
