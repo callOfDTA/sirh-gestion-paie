@@ -18,46 +18,40 @@ import dev.paie.entite.Cotisation;
 
 //Sélection des classes de configuration Spring à utiliser lors du test
 @ContextConfiguration(classes = { JpaConfig.class, DataSourceMySQLConfig.class, CotisationServiceJpa.class })
-//Configuration JUnit pour que Spring prenne la main sur le cycle de vie du
-//test
+// Configuration JUnit pour que Spring prenne la main sur le cycle de vie du
+// test
 @RunWith(SpringRunner.class)
 public class CotisationServiceJpaTest {
 	@Autowired
 	private CotisationService cotisationService;
 
 	private List<Cotisation> cotisations;
-	
+
 	private Cotisation cot;
-	
+
 	@Test
 	public void test_sauvegarder_lister_mettre_a_jour() {
-		
+
 		cot = new Cotisation("TITI", "YOUHOU", BigDecimal.valueOf(0.89), BigDecimal.valueOf(0.12));
-		
+
 		cotisationService.sauvegarder(cot);
 		cotisations = cotisationService.lister();
 		cotisations.stream().forEach(g -> System.out.println(g.toString()));
 
-		Stream.of(cot).forEach(g -> assertTrue("verification Sauvegarder ",	cotisations.stream().filter(c -> cot.equals(cot)).findAny().isPresent()));
-
-		
+		Stream.of(cot).forEach(g -> assertTrue("verification Sauvegarder ",
+				cotisations.stream().filter(c -> cot.equals(cot)).findAny().isPresent()));
 
 		cot = cotisations.stream().filter(c -> c.equals(cot)).findAny().get();
-		
+
 		cot.setCode("TOTO");
 		cotisationService.mettreAJour(cot);
 		cotisations = cotisationService.lister();
 
 		cotisations.stream().forEach(g -> System.out.println(g.toString()));
 
-		Stream.of(cot).forEach(g -> assertTrue("verification MAJ ",	cotisations.stream().filter(c -> c.equals(cot)).findAny().isPresent()));
+		Stream.of(cot).forEach(g -> assertTrue("verification MAJ ",
+				cotisations.stream().filter(c -> c.equals(cot)).findAny().isPresent()));
 
-		
-		
-		
-		
-		
-		
 		// TODO sauvegarder une nouvelle cotisation
 		// TODO vérifier qu'il est possible de récupérer la nouvelle cotisation
 		// via laméthode lister

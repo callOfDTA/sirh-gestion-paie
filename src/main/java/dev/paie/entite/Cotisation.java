@@ -1,18 +1,13 @@
 package dev.paie.entite;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "COTISATION")
@@ -22,17 +17,16 @@ public class Cotisation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "CODE", nullable=false)
+	@Column(name = "CODE", nullable = false, unique = true)
 	private String code;
-	@Column(name = "LIBELLE", nullable=false)
+	@Column(name = "LIBELLE", nullable = false)
 	private String libelle;
 
 	@Column(name = "TX_SALARIAL")
-	private BigDecimal tauxSalarial = BigDecimal.valueOf(0.00);
+	private BigDecimal tauxSalarial;
 
 	@Column(name = "TX_PATRONAL")
-	private BigDecimal tauxPatronal = BigDecimal.valueOf(0.00);
-
+	private BigDecimal tauxPatronal;
 
 	/**
 	 * 
@@ -54,7 +48,6 @@ public class Cotisation {
 		this.tauxPatronal = tauxPatronal;
 	}
 
-	
 	public String getCode() {
 		return code;
 	}

@@ -9,9 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "BULLETIN_SALAIRE")
@@ -22,11 +20,11 @@ public class BulletinSalaire {
 	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name="EMPLOYE_ID")
+	@JoinColumn(name = "EMPLOYE_ID", nullable = false)
 	private RemunerationEmploye remunerationEmploye;
 
 	@ManyToOne
-	@JoinColumn(name="PERIODE_ID")
+	@JoinColumn(name = "PERIODE_ID", nullable = false)
 	private Periode periode;
 
 	@Column(name = "PRIME_EXCEPTIONNELLE")

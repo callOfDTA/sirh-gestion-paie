@@ -17,7 +17,7 @@ public class Grade {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "CODE", nullable=false)
+	@Column(name = "CODE", nullable = false, unique = true)
 	private String code;
 
 	@Column(name = "NB_HEURE_BASE")

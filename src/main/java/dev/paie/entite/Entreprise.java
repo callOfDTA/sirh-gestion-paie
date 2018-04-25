@@ -14,19 +14,19 @@ public class Entreprise {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "SIRET", nullable=false)
+	@Column(name = "SIRET", nullable = false, unique = true)
 	private String siret;
 
-	@Column(name = "DENOMINATION", nullable=false)
+	@Column(name = "DENOMINATION", nullable = false)
 	private String denomination;
 
 	@Column(name = "ADRESSE")
 	private String adresse;
 
-	@Column(name = "URSSAF", nullable=false)
+	@Column(name = "URSSAF")
 	private String urssaf;
 
-	@Column(name = "CODE_NAF", nullable=false)
+	@Column(name = "CODE_NAF")
 	private String codeNaf;
 
 	public String getDenomination() {
