@@ -17,13 +17,13 @@ public class Avantage {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name="code")
+	@Column(name="code", nullable=false)
 	private String code;
 	
-	@Column(name="nom")
+	@Column(name="nom" , nullable=false)
 	private String nom;
 	
-	@Column(name="montant")
+	@Column(name="montant", nullable=false)
 	private BigDecimal montant;
 
 	public Avantage(){}

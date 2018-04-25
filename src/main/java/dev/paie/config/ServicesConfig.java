@@ -10,4 +10,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Import({JpaConfig.class, DataSourceMySQLConfig.class})
 @EnableJpaRepositories("dev.paie.repository") 
 public class ServicesConfig {
+	
 }

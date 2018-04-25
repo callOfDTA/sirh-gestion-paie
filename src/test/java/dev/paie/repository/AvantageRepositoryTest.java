@@ -37,9 +37,14 @@ public class AvantageRepositoryTest {
 		listAvantage.stream().forEach(a -> System.out.println(a.toString()));
 
 		// TODO modifier un avantage
-
-		// avantageRepository.
+		nouveauAvantage.setNom("Cyril");
+		avantageRepository.save(nouveauAvantage);
 		// TODO vérifier que les modifications sont bien prises en compte via la
 		// méthode findOne
+		
+
+		listAvantage.stream().forEach(a -> System.out.println(a.toString()));
+		assertTrue("verification MAJ ", avantageRepository.exists(nouveauAvantage.getId()));
+
 	}
 }

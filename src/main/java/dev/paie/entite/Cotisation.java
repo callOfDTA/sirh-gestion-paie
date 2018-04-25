@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -19,22 +21,18 @@ public class Cotisation {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name="code")
+	@Column(name="code", nullable=false)
 	private String code;
 	
-	@Column(name="libelle")
+	@Column(name="libelle", nullable=false)
 	private String libelle;
 	
-	@Column(name="tauxSalarial")
+	@Column(name="tauxSalarial", nullable=false)
 	private BigDecimal tauxSalarial = BigDecimal.valueOf(0.00);
 	
 	@Column(name="tauxPatronal")
 	private BigDecimal tauxPatronal = BigDecimal.valueOf(0.00);
-	
-	@Transient
-	private List<ProfilRemuneration> employees;
-	
-	
+		
 	public Cotisation(){}
 	
 	/**

@@ -2,22 +2,37 @@ package dev.paie.entite;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class Grade.
  */
+@Entity
+@Table(name="GRADE")
 public class Grade {
 
 	/** The id. */
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
 	/** The code. */
+	@Column(name="code", nullable=false)
 	private String code;
 
 	/** The nb heures base. */
+	@Column(name="nbHeuresBase" , nullable=false)
 	private BigDecimal nbHeuresBase;
 
 	/** The taux base. */
+	@Column(name="tauxBase", nullable=false)
 	private BigDecimal tauxBase;
 
 	public Grade() {
