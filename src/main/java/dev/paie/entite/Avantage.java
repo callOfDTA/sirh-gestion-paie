@@ -16,21 +16,23 @@ public class Avantage {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column(name = "code", length = 10, nullable = false)
+
+	@Column(name = "code", nullable = false, unique = true)
 	private String code;
-	
-	@Column(name = "nom", length = 10, nullable = false)
+
+	@Column(name = "nom", nullable = false)
 	private String nom;
-	
+
 	@Column(name = "montant", nullable = false)
 	private BigDecimal montant;
 
-	
-	public Avantage(){
-		
+	/**
+	 ** constructor
+	 */
+	public Avantage() {
+
 	}
-	
+
 	public String getCode() {
 		return code;
 	}

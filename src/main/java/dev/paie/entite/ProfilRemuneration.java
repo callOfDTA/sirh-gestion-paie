@@ -20,7 +20,7 @@ public class ProfilRemuneration {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "code", length = 10, nullable = false)
+	@Column(name = "code", nullable = false, unique = true)
 	private String code;
 
 	@ManyToMany
