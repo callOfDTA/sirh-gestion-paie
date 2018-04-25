@@ -17,10 +17,10 @@ public class Avantage {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "CODE")
+	@Column(name = "CODE", nullable=false)
 	private String code;
 
-	@Column(name = "NOM")
+	@Column(name = "NOM", nullable=false)
 	private String nom;
 
 	@Column(name = "MONTANT")

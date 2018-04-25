@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -19,9 +22,9 @@ public class Cotisation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "CODE")
+	@Column(name = "CODE", nullable=false)
 	private String code;
-	@Column(name = "LIBELLE")
+	@Column(name = "LIBELLE", nullable=false)
 	private String libelle;
 
 	@Column(name = "TX_SALARIAL")
@@ -29,6 +32,7 @@ public class Cotisation {
 
 	@Column(name = "TX_PATRONAL")
 	private BigDecimal tauxPatronal = BigDecimal.valueOf(0.00);
+
 
 	/**
 	 * 
@@ -43,18 +47,14 @@ public class Cotisation {
 	 * @param tauxPatronal
 	 * @param employes
 	 */
-	public Cotisation(String code, String libelle, BigDecimal tauxSalarial, BigDecimal tauxPatronal,
-			List<ProfilRemuneration> employes) {
+	public Cotisation(String code, String libelle, BigDecimal tauxSalarial, BigDecimal tauxPatronal) {
 		this.code = code;
 		this.libelle = libelle;
 		this.tauxSalarial = tauxSalarial;
 		this.tauxPatronal = tauxPatronal;
-		this.employes = employes;
 	}
 
-	@Transient
-	private List<ProfilRemuneration> employes;
-
+	
 	public String getCode() {
 		return code;
 	}
@@ -103,8 +103,7 @@ public class Cotisation {
 	@Override
 	public String toString() {
 		return "Cotisation [id=" + id + ", code=" + code + ", libelle=" + libelle + ", tauxSalarial=" + tauxSalarial
-				+ ", tauxPatronal=" + tauxPatronal;// + ", employes=" + employes
-													// + "]";
+				+ ", tauxPatronal=" + tauxPatronal;
 	}
 
 	/*

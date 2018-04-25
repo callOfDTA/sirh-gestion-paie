@@ -32,7 +32,7 @@ public class CotisationServiceJpaTest {
 	@Test
 	public void test_sauvegarder_lister_mettre_a_jour() {
 		
-		cot = new Cotisation("TITI", "YOUHOU", BigDecimal.valueOf(0.89), BigDecimal.valueOf(0.12), null);
+		cot = new Cotisation("TITI", "YOUHOU", BigDecimal.valueOf(0.89), BigDecimal.valueOf(0.12));
 		
 		cotisationService.sauvegarder(cot);
 		cotisations = cotisationService.lister();

@@ -34,6 +34,14 @@ public class AvantageRepositoryTest {
 		
 		assertTrue(avantageRepository.exists(av.getId()));
 		
+		av.setCode("TOTO");
+		
+		avantageRepository.save(av);
+
+		assertTrue(avantageRepository.exists(av.getId()));
+
+		
+		avantageRepository.delete(av);
 //		avantageRepository.
 		
 		
