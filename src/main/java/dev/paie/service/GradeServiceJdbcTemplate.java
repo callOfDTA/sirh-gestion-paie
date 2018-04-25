@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import dev.paie.entite.Grade;
+import dev.paie.mapper.GradeMapper;
 
 @Service
 public class GradeServiceJdbcTemplate implements GradeService {

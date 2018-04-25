@@ -1,4 +1,4 @@
-package dev.paie.service;
+package dev.paie.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
