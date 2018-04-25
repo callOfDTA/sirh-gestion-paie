@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import dev.paie.entite.Grade;
-import dev.paie.service.GradeMapper;
 
 @Service
 public class GradeServiceJdbcTemplate implements GradeService {
@@ -23,24 +22,15 @@ public class GradeServiceJdbcTemplate implements GradeService {
 
 	@Override
 	public void sauvegarder(Grade nouveauGrade) {
-		String sql = "INSERT INTO grade (ID, CODE, NB_HEURES_BASE, TAUX_BASE) "
-				+ "VALUES(?,?,?,?)";
-		jdbcTemplate.update(sql, nouveauGrade.getId(), 
-				nouveauGrade.getCode(), 
-				nouveauGrade.getNbHeuresBase(), 
-				nouveauGrade.getTauxBase());	
+		String sql = "INSERT INTO grade (ID, CODE, NB_HEURES_BASE, TAUX_BASE) " + "VALUES(?,?,?,?)";
+		jdbcTemplate.update(sql, nouveauGrade.getId(), nouveauGrade.getCode(), nouveauGrade.getNbHeuresBase(),
+				nouveauGrade.getTauxBase());
 	}
 
 	@Override
 	public void mettreAJour(Grade grade) {
-		String sql = "UPDATE grade SET CODE = ?, "
-				+ "NB_HEURES_BASE = ?, "
-				+ "TAUX_BASE = ? "
-				+ "WHERE ID = ?";
-		jdbcTemplate.update(sql, grade.getId(), 
-				grade.getCode(), 
-				grade.getNbHeuresBase(), 
-				grade.getTauxBase());	
+		String sql = "UPDATE grade SET CODE = ?, " + "NB_HEURES_BASE = ?, " + "TAUX_BASE = ? " + "WHERE ID = ?";
+		jdbcTemplate.update(sql, grade.getId(), grade.getCode(), grade.getNbHeuresBase(), grade.getTauxBase());
 	}
 
 	@Override

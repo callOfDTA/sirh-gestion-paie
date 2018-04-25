@@ -16,23 +16,26 @@ public class CotisationServiceJpa implements CotisationService {
 	@PersistenceContext
 	private EntityManager em;
 
+	public CotisationServiceJpa() {
+	}
+
 	@Override
 	@Transactional
 	public void sauvegarder(Cotisation nouvelleCotisation) {
-		em.persist(nouvelleCotisation);	
+		em.persist(nouvelleCotisation);
 	}
 
 	@Override
 	@Transactional
 	public void mettreAJour(Cotisation cotisation) {
 		Cotisation oldCot = em.find(Cotisation.class, cotisation.getId());
-		
-		if(oldCot != null) {
+
+		if (oldCot != null) {
 			oldCot.setCode(cotisation.getCode());
 			oldCot.setLibelle(cotisation.getLibelle());
 			oldCot.setTauxPatronal(cotisation.getTauxPatronal());
 			oldCot.setTauxSalarial(cotisation.getTauxSalarial());
-		}	
+		}
 	}
 
 	@Override
@@ -40,5 +43,4 @@ public class CotisationServiceJpa implements CotisationService {
 		TypedQuery<Cotisation> query = em.createQuery("FROM cotisation", Cotisation.class);
 		return query.getResultList();
 	}
-
 }

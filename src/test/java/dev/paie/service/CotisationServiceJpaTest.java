@@ -10,10 +10,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import dev.paie.config.DataSourceMySQLConfig;
 import dev.paie.config.JpaConfig;
-import dev.paie.config.ServicesConfig;
 import dev.paie.entite.Cotisation;
 
-@ContextConfiguration(classes = { ServicesConfig.class, JpaConfig.class, DataSourceMySQLConfig.class })
+@ContextConfiguration(classes = { CotisationServiceJpa.class, JpaConfig.class, DataSourceMySQLConfig.class })
 @RunWith(SpringRunner.class)
 public class CotisationServiceJpaTest {
 	@Autowired
@@ -22,10 +21,10 @@ public class CotisationServiceJpaTest {
 	@Test
 	public void test_sauvegarder_lister_mettre_a_jour() {
 		Cotisation cot1 = new Cotisation("BRA", "Bramard", new BigDecimal("124.00"), new BigDecimal("20.15"));
-		
+
 		// TODO sauvegarder une nouvelle cotisation
 		cotisationService.sauvegarder(cot1);
-		
+
 		// TODO vérifier qu'il est possible de récupérer la nouvelle cotisation
 		// via laméthode lister
 		// TODO modifier une cotisation
