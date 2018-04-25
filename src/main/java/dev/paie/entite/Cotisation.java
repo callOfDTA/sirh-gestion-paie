@@ -25,8 +25,6 @@ public class Cotisation {
 	private BigDecimal tauxSalarial;
 	@Column(name = "TAUX_PATRONAL", precision = 6, scale=3, nullable = false)
 	private BigDecimal tauxPatronal;
-	@Transient
-	List<ProfilRemuneration>listeProfil;
 	
 	public Cotisation(){
 		
