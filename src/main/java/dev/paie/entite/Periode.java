@@ -14,27 +14,38 @@ import javax.persistence.Table;
  * The Class Periode.
  */
 @Entity
-@Table(name="PERIODE")
+@Table(name = "PERIODE")
 public class Periode {
-	
+
 	/** The id. */
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	/** The date debut. */
-	@Column(name="dateDebut", nullable=false)
+	@Column(name = "dateDebut", nullable = false)
 	private LocalDate dateDebut;
-	
+
 	/** The date fin. */
-	@Column(name="dateFin", nullable=false)
+	@Column(name = "dateFin", nullable = false)
 	private LocalDate dateFin;
-	
+
+	/**
+	 * @param dateDebut
+	 * @param dateFin
+	 */
+	public Periode(LocalDate dateDebut, LocalDate dateFin) {
+		super();
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+	}
+
 	/**
 	 * Instantiates a new periode.
 	 */
-	public Periode(){}
-	
+	public Periode() {
+	}
+
 	/**
 	 * Gets the date debut.
 	 *
@@ -43,16 +54,17 @@ public class Periode {
 	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
-	
+
 	/**
 	 * Sets the date debut.
 	 *
-	 * @param dateDebut the new date debut
+	 * @param dateDebut
+	 *            the new date debut
 	 */
 	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
-	
+
 	/**
 	 * Gets the date fin.
 	 *
@@ -61,16 +73,17 @@ public class Periode {
 	public LocalDate getDateFin() {
 		return dateFin;
 	}
-	
+
 	/**
 	 * Sets the date fin.
 	 *
-	 * @param dateFin the new date fin
+	 * @param dateFin
+	 *            the new date fin
 	 */
 	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
-	
+
 	/**
 	 * Gets the id.
 	 *
@@ -79,18 +92,15 @@ public class Periode {
 	public Integer getId() {
 		return id;
 	}
-	
+
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	
-	
-	
 
 }
