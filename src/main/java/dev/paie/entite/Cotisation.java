@@ -32,10 +32,6 @@ public class Cotisation {
 	@Column(name = "tauxPatronal", nullable = false)
 	private BigDecimal tauxPatronal;
 	
-	@Transient
-	@ManyToMany(mappedBy="cotisationsNonImposables")
-	List<ProfilRemuneration> profil;
-	
 	public Cotisation(){
 		
 	}
