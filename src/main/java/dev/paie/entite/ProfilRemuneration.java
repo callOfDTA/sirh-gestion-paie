@@ -14,33 +14,27 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ProfilRemuneration")
+@Table(name = "ProfilRemuneration")
 public class ProfilRemuneration {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "CODE", length = 20, nullable = false)
+	@Column(name = "CODE", nullable = false, unique = true)
 	private String code;
 	@ManyToMany
-	@JoinTable(name = "compoNonImposable", 
-		joinColumns = @JoinColumn(name = "ID_PROF_REM", referencedColumnName = "ID"), 
-		inverseJoinColumns = @JoinColumn(name = "ID_COT", referencedColumnName = "ID"))
+	@JoinTable(name = "compoNonImposable", joinColumns = @JoinColumn(name = "ID_PROF_REM", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ID_COT", referencedColumnName = "ID"))
 	private List<Cotisation> cotisationsNonImposables;
 	@ManyToMany
-	@JoinTable(name = "compoImposable", 
-		joinColumns = @JoinColumn(name = "ID_PROF_REM", referencedColumnName = "ID"), 
-		inverseJoinColumns = @JoinColumn(name = "ID_COT", referencedColumnName = "ID"))
+	@JoinTable(name = "compoImposable", joinColumns = @JoinColumn(name = "ID_PROF_REM", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ID_COT", referencedColumnName = "ID"))
 	private List<Cotisation> cotisationsImposables;
 	@ManyToMany
-	@JoinTable(name = "compoAvantage", 
-		joinColumns = @JoinColumn(name = "ID_PROF_REM", referencedColumnName = "ID"), 
-		inverseJoinColumns = @JoinColumn(name = "ID_AVAN", referencedColumnName = "ID"))
+	@JoinTable(name = "compoAvantage", joinColumns = @JoinColumn(name = "ID_PROF_REM", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ID_AVAN", referencedColumnName = "ID"))
 	private List<Avantage> avantages;
-	
-	public ProfilRemuneration(){
-		cotisationsNonImposables=new ArrayList<Cotisation>();
-		cotisationsImposables=new ArrayList<Cotisation>();
-		avantages=new ArrayList<Avantage>();
+
+	public ProfilRemuneration() {
+		cotisationsNonImposables = new ArrayList<Cotisation>();
+		cotisationsImposables = new ArrayList<Cotisation>();
+		avantages = new ArrayList<Avantage>();
 	}
 
 	public Integer getId() {
