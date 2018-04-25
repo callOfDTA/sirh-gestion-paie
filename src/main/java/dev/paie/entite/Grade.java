@@ -14,27 +14,30 @@ import javax.persistence.Table;
  * The Class Grade.
  */
 @Entity
-@Table(name="GRADE")
+@Table(name = "GRADE")
 public class Grade {
 
 	/** The id. */
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	/** The code. */
-	@Column(name="code", nullable=false)
+	@Column(name = "code", nullable = false, unique = true)
 	private String code;
 
 	/** The nb heures base. */
-	@Column(name="nbHeuresBase" , nullable=false)
+	@Column(name = "nbHeuresBase")
 	private BigDecimal nbHeuresBase;
 
 	/** The taux base. */
-	@Column(name="tauxBase", nullable=false)
+	@Column(name = "tauxBase")
 	private BigDecimal tauxBase;
 
+	/**
+	 * Instantiates a new grade.
+	 */
 	public Grade() {
 	}
 
@@ -161,14 +164,19 @@ public class Grade {
 		return "Grade [id=" + id + ", code=" + code + ", nbHeuresBase=" + nbHeuresBase + ", tauxBase=" + tauxBase + "]";
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object o) {
 		Grade g = (Grade) o;
 
-		if (this.getCode().equals(g.getCode()) && this.nbHeuresBase.doubleValue()==g.getNbHeuresBase().doubleValue()
-				&& this.tauxBase.doubleValue()==g.getTauxBase().doubleValue())
+		if (this.getCode().equals(g.getCode()) && this.nbHeuresBase.doubleValue() == g.getNbHeuresBase().doubleValue()
+				&& this.tauxBase.doubleValue() == g.getTauxBase().doubleValue())
 			return true;
-		
+
 		return false;
 
 	}

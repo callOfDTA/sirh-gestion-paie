@@ -9,28 +9,46 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Avantage.
+ */
 @Entity
-@Table(name="AVANTAGE")
+@Table(name = "AVANTAGE")
 public class Avantage {
 
+	/** The id. */
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column(name="code", nullable=false)
+
+	/** The code. */
+	@Column(name = "code", nullable = false, unique = true)
 	private String code;
-	
-	@Column(name="nom" , nullable=false)
+
+	/** The nom. */
+	@Column(name = "nom", nullable = false)
 	private String nom;
-	
-	@Column(name="montant", nullable=false)
+
+	/** The montant. */
+	@Column(name = "montant", nullable = false)
 	private BigDecimal montant;
 
-	public Avantage(){}
 	/**
+	 * Instantiates a new avantage.
+	 */
+	public Avantage() {
+	}
+
+	/**
+	 * Instantiates a new avantage.
+	 *
 	 * @param code
+	 *            the code
 	 * @param nom
+	 *            the nom
 	 * @param montant
+	 *            the montant
 	 */
 	public Avantage(String code, String nom, BigDecimal montant) {
 		super();
@@ -39,44 +57,90 @@ public class Avantage {
 		this.montant = montant;
 	}
 
+	/**
+	 * Gets the code.
+	 *
+	 * @return the code
+	 */
 	public String getCode() {
 		return code;
 	}
 
+	/**
+	 * Sets the code.
+	 *
+	 * @param code
+	 *            the new code
+	 */
 	public void setCode(String code) {
 		this.code = code;
 	}
 
+	/**
+	 * Gets the nom.
+	 *
+	 * @return the nom
+	 */
 	public String getNom() {
 		return nom;
 	}
 
+	/**
+	 * Sets the nom.
+	 *
+	 * @param nom
+	 *            the new nom
+	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
+	/**
+	 * Gets the montant.
+	 *
+	 * @return the montant
+	 */
 	public BigDecimal getMontant() {
 		return montant;
 	}
 
+	/**
+	 * Sets the montant.
+	 *
+	 * @param montant
+	 *            the new montant
+	 */
 	public void setMontant(BigDecimal montant) {
 		this.montant = montant;
 	}
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public Integer getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id.
+	 *
+	 * @param id
+	 *            the new id
+	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "Avantage [code=" + code + ", nom=" + nom + ", montant=" + montant + "]";
 	}
-	
-	
+
 }

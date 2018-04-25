@@ -11,79 +11,136 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ProfilRemuneration.
+ */
 @Entity
-@Table(name="PROFILREMUNERATION")
+@Table(name = "PROFILREMUNERATION")
 public class ProfilRemuneration {
 
+	/** The id. */
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column(name="code" , nullable=false)
+
+	/** The code. */
+	@Column(name = "code", nullable = false, unique = true)
 	private String code;
 
+	/** The cotisations non imposables. */
 	@ManyToMany
-	@JoinTable(name="PR_NONIMP",
-		joinColumns= @JoinColumn(name="PR_ID", referencedColumnName="ID"),
-		inverseJoinColumns= @JoinColumn(name="COT_ID", referencedColumnName="ID")
-	)
+	@JoinTable(name = "PR_NONIMP", joinColumns = @JoinColumn(name = "PR_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "COT_ID", referencedColumnName = "ID"))
 	private List<Cotisation> cotisationsNonImposables;
-	
+
+	/** The cotisations imposables. */
 	@ManyToMany
-	@JoinTable(name="PR_IMP",
-		joinColumns= @JoinColumn(name="PR_ID", referencedColumnName="ID"),
-		inverseJoinColumns= @JoinColumn(name="COT_ID", referencedColumnName="ID")
-	)
+	@JoinTable(name = "PR_IMP", joinColumns = @JoinColumn(name = "PR_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "COT_ID", referencedColumnName = "ID"))
 	private List<Cotisation> cotisationsImposables;
-	
+
+	/** The avantages. */
 	@ManyToMany
-	@JoinTable(name="PR_AV",
-			joinColumns= @JoinColumn(name="PR_ID", referencedColumnName="ID"),
-			inverseJoinColumns= @JoinColumn(name="AV_ID", referencedColumnName="ID")
-	)
+	@JoinTable(name = "PR_AV", joinColumns = @JoinColumn(name = "PR_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "AV_ID", referencedColumnName = "ID"))
 	private List<Avantage> avantages;
 
-	
-	public ProfilRemuneration(){}
-	
+	/**
+	 * Instantiates a new profil remuneration.
+	 */
+	public ProfilRemuneration() {
+	}
+
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public Integer getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id.
+	 *
+	 * @param id
+	 *            the new id
+	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
+	/**
+	 * Gets the code.
+	 *
+	 * @return the code
+	 */
 	public String getCode() {
 		return code;
 	}
 
+	/**
+	 * Sets the code.
+	 *
+	 * @param code
+	 *            the new code
+	 */
 	public void setCode(String code) {
 		this.code = code;
 	}
 
+	/**
+	 * Gets the cotisations non imposables.
+	 *
+	 * @return the cotisations non imposables
+	 */
 	public List<Cotisation> getCotisationsNonImposables() {
 		return cotisationsNonImposables;
 	}
 
+	/**
+	 * Sets the cotisations non imposables.
+	 *
+	 * @param cotisationsNonImposables
+	 *            the new cotisations non imposables
+	 */
 	public void setCotisationsNonImposables(List<Cotisation> cotisationsNonImposables) {
 		this.cotisationsNonImposables = cotisationsNonImposables;
 	}
 
+	/**
+	 * Gets the cotisations imposables.
+	 *
+	 * @return the cotisations imposables
+	 */
 	public List<Cotisation> getCotisationsImposables() {
 		return cotisationsImposables;
 	}
 
+	/**
+	 * Sets the cotisations imposables.
+	 *
+	 * @param cotisationsImposables
+	 *            the new cotisations imposables
+	 */
 	public void setCotisationsImposables(List<Cotisation> cotisationsImposables) {
 		this.cotisationsImposables = cotisationsImposables;
 	}
 
+	/**
+	 * Gets the avantages.
+	 *
+	 * @return the avantages
+	 */
 	public List<Avantage> getAvantages() {
 		return avantages;
 	}
 
+	/**
+	 * Sets the avantages.
+	 *
+	 * @param avantages
+	 *            the new avantages
+	 */
 	public void setAvantages(List<Avantage> avantages) {
 		this.avantages = avantages;
 	}
