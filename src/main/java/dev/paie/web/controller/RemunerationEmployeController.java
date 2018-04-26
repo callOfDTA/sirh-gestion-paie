@@ -1,5 +1,7 @@
 package dev.paie.web.controller;
 
+import java.text.SimpleDateFormat;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -53,7 +55,17 @@ public class RemunerationEmployeController {
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")
 	public ModelAndView listerEmployeGet() {
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("localDateTimeFormat", new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"));
+
+		mv.addObject("employes", employeRepo.findAll());
 		mv.setViewName("employes/listerEmploye");
+		return mv;
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/lister")
+	public ModelAndView listerEmployePost() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("redirect:/mvc/employes/creer");
 		return mv;
 	}
 

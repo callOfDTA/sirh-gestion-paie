@@ -1,15 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"
 	href='<c:url value="/bootstrap/css/bootstrap.css"/>'>
-<title>SIRH - Ajouter un employé</title>
+<title>SIRH - Ajouter un employÃ©</title>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light"> <a
@@ -23,7 +24,7 @@
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item"><a class="nav-link" href="#">Employés </a></li>
+			<li class="nav-item"><a class="nav-link" href="#">EmployÃ©s </a></li>
 			<li class="nav-item"><a class="nav-link" href="#">Bulletins</a>
 			</li>
 		</ul>
@@ -49,20 +50,29 @@
 
 					<label for="entreprise" class="col-sm-4">Entreprise</label>
 					<div class="col-sm-8">
-						<form:select path="entreprise.id" class="form-control" id="formGrade">
-							<form:options items="${entreprises}" itemValue="id" itemLabel="denomination" />
+						<form:select path="entreprise.id" class="form-control"
+							id="formGrade">
+							<form:options items="${entreprises}" itemValue="id"
+								itemLabel="denomination" />
 						</form:select>
 					</div>
 					<label for="profil" class="col-sm-4">Profil</label>
 					<div class="col-sm-8">
-						<form:select path="profilRemuneration.id" class="form-control" id="formGrade">
+						<form:select path="profilRemuneration.id" class="form-control"
+							id="formGrade">
 							<form:options items="${profils}" itemValue="id" itemLabel="code" />
 						</form:select>
 					</div>
 					<label for="grade" class="col-sm-4">Grade</label>
 					<div class="col-sm-8">
 						<form:select path="grade.id" class="form-control" id="formGrade">
-							<form:options items="${grades}" itemValue="id" itemLabel="code" />
+							<c:forEach items="${ grades }" var="g">
+								<option value="${g.id}">${g.code}-
+									<fmt:formatNumber pattern="#,##0"
+										value="${g.tauxBase*g.nbHeuresBase*12}"></fmt:formatNumber> â‚¬
+									/ an
+								</option>
+							</c:forEach>
 						</form:select>
 					</div>
 				</div>
@@ -72,13 +82,6 @@
 			</form:form>
 		</div>
 	</div>
-
-
-
-
-
-
-
 
 
 
