@@ -50,11 +50,7 @@ public class RemunerationEmploye {
 
 	@PrePersist
 	private void setDateTimeCreation() {
-		// DateTimeFormatter dateTimeFormatter =
-		// DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		this.dateCreation = ZonedDateTime.now();
-		// this.dateCreation.parse("dd/MM/yyyy HH:mm:ss");
-
 	}
 
 	public String getDateCreationLibelle() {

@@ -27,7 +27,7 @@ public class RemunerationEmployeController {
 	private ProfilRemunerationRepository profilsRepo;
 
 	@Autowired
-	RemunerationEmployeRepository employesRepo;
+	private RemunerationEmployeRepository employesRepo;
 
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
 	public ModelAndView creerEmployeGet() {
