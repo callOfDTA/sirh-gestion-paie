@@ -27,7 +27,7 @@ public class RemunerationEmployeController {
 	private ProfilRemunerationRepository profilsRepo;
 
 	@Autowired
-	RemunerationEmployeRepository employes;
+	RemunerationEmployeRepository employesRepo;
 
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
 	public ModelAndView creerEmployeGet() {
@@ -45,16 +45,26 @@ public class RemunerationEmployeController {
 	@RequestMapping(method = RequestMethod.POST, path = "/creer")
 	public ModelAndView creerEmployePost(@ModelAttribute("RemunerationEmploye") RemunerationEmploye employe) {
 		ModelAndView mv = new ModelAndView();
-		employes.save(employe);
+		employesRepo.save(employe);
 		mv.setViewName("redirect:/mvc/employes/lister");
 		return mv;
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")
-	public ModelAndView listerEmployePost() {
+	public ModelAndView listerEmployeGet() {
 		ModelAndView mv = new ModelAndView();
 
+		mv.addObject("employes", employesRepo.findAll());
 		mv.setViewName("employes/listerEmploye");
 		return mv;
 	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/lister")
+	public ModelAndView listerEmployePost() {
+		ModelAndView mv = new ModelAndView();
+
+		mv.setViewName("redirect:/mvc/employes/creer");
+		return mv;
+	}
+
 }

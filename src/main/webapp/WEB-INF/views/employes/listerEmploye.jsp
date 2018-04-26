@@ -23,15 +23,32 @@
 	<div class="container">
 		<h1>Lister Employe</h1>
 
-		</div>
+		<form:form method="post">
+			<div class="row justify-content-end">
+				<input type="submit" class="btn btn-primary"
+					value="Ajouter un employe">
+			</div>
+		</form:form>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Date/Heure création</th>
+						<th scope="col">Matricule</th>
+						<th scope="col">Grade</th>
+					</tr>
+				</thead>
+				<c:forEach  items="${employes}" var="e">
+				<tbody>
+					<tr>
+						<td>${e.dateCreationLibelle}</td>
+						<td>${e.matricule}</td>
+						<td>${e.grade.code}</td>
+					</tr>
+				</tbody>
+				</c:forEach>
+			</table>
 
 	</div>
-
-
-
-
-
-
 
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

@@ -1,5 +1,8 @@
 package dev.paie.entite;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 // TODO: Auto-generated Javadoc
@@ -40,6 +44,38 @@ public class RemunerationEmploye {
 	@ManyToOne
 	@JoinColumn(name = "GRADE_ID", nullable = false)
 	private Grade grade;
+
+	@Column(name = "dateCreation")
+	private ZonedDateTime dateCreation;
+
+	@PrePersist
+	private void setDateTimeCreation() {
+		// DateTimeFormatter dateTimeFormatter =
+		// DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		this.dateCreation = ZonedDateTime.now();
+		// this.dateCreation.parse("dd/MM/yyyy HH:mm:ss");
+
+	}
+
+	public String getDateCreationLibelle() {
+		return this.dateCreation.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+	}
+
+	/**
+	 * @return the dateCreation
+	 */
+	public ZonedDateTime getDateCreation() {
+
+		return dateCreation;
+	}
+
+	/**
+	 * @param dateCreation
+	 *            the dateCreation to set
+	 */
+	public void setDateCreation(ZonedDateTime dateCreation) {
+		this.dateCreation = dateCreation;
+	}
 
 	/**
 	 * Instantiates a new remuneration employe.
