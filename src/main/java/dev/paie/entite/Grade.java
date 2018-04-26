@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "GRADE")
+@Table(name = "grade")
 public class Grade {
 
 	@Id
@@ -20,10 +20,10 @@ public class Grade {
 	@Column(name = "CODE", nullable = false, unique = true)
 	private String code;
 
-	@Column(name = "NB_HEURE_BASE")
+	@Column(name = "NB_HEURES_BASE")
 	private BigDecimal nbHeuresBase;
 
-	@Column(name = "TAUX")
+	@Column(name = "TAUX_DE_BASE")
 	private BigDecimal tauxBase;
 
 	public String getCode() {
@@ -56,25 +56,6 @@ public class Grade {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Grade [id=" + id + ", code=" + code + ", nbHeuresBase=" + nbHeuresBase + ", tauxBase=" + tauxBase + "]";
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		Grade g = (Grade) o;
-		if (this.code.equals(g.getCode()) && this.nbHeuresBase.doubleValue() == g.getNbHeuresBase().doubleValue()
-				&& this.tauxBase.doubleValue() == g.getTauxBase().doubleValue())
-			return true;
-		return false;
 	}
 
 }

@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "AVANTAGE")
+@Table(name = "avantage")
 public class Avantage {
 
 	@Id
@@ -73,30 +73,5 @@ public class Avantage {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Avantage [id=" + id + ", code=" + code + ", nom=" + nom + ", montant=" + montant + "]";
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		Avantage a = (Avantage) obj;
-
-		if (this.code.equals(a.getCode()) && this.nom.equals(a.getNom())
-				&& this.montant.doubleValue() == a.getMontant().doubleValue())
-			return true;
-		return false;
 	}
 }
