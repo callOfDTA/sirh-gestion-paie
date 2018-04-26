@@ -15,10 +15,12 @@ import dev.paie.entite.Cotisation;
 import dev.paie.entite.Entreprise;
 import dev.paie.entite.Grade;
 import dev.paie.entite.Periode;
+import dev.paie.entite.ProfilRemuneration;
 import dev.paie.repository.CotisationRepository;
 import dev.paie.repository.EntrepriseRepository;
 import dev.paie.repository.GradeRepository;
 import dev.paie.repository.PeriodeRepository;
+import dev.paie.repository.ProfilRepository;
 
 /**
  * @author ETY9
@@ -34,15 +36,18 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 	private CotisationRepository cotisationRepository;
 	@Autowired
 	private PeriodeRepository periodeRepository;
+	@Autowired
+	private ProfilRepository profilRepository;
 
 	@Override
 	public void initialiser() {
 		try (ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("cotisations-imposables.xml",
-				"grades.xml", "entreprises.xml")) {
+				"cotisations-non-imposables.xml", "grades.xml", "entreprises.xml", "profils-remuneration.xml")) {
 
 			Map<String, Cotisation> idCotis = ctx.getBeansOfType(Cotisation.class);
 			Map<String, Entreprise> idEntreprise = ctx.getBeansOfType(Entreprise.class);
 			Map<String, Grade> idGrade = ctx.getBeansOfType(Grade.class);
+			Map<String, ProfilRemuneration> idProfil = ctx.getBeansOfType(ProfilRemuneration.class);
 
 			idCotis.forEach((k, cotisation) -> {
 				cotisationRepository.save(cotisation);
@@ -52,6 +57,9 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 			});
 			idGrade.forEach((k, grade) -> {
 				gradeRepository.save(grade);
+			});
+			idProfil.forEach((k, profil) -> {
+				profilRepository.save(profil);
 			});
 
 			LocalDate today = LocalDate.now();

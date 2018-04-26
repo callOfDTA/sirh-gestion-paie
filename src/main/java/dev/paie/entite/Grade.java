@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import dev.paie.util.PaieUtils;
+
 @Entity
 @Table(name = "grade")
 public class Grade {
@@ -28,6 +30,11 @@ public class Grade {
 
 	public Grade() {
 
+	}
+
+	public String getLibelle() {
+		return String.format("%s %s € / an", this.code, new PaieUtils()
+				.formaterBigDecimal(this.tauxBase.multiply((this.nbHeuresBase).multiply(BigDecimal.valueOf(12)))));
 	}
 
 	public String getCode() {
