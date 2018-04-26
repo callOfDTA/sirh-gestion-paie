@@ -15,12 +15,16 @@ public class Cotisation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
 	@Column(name = "CODE", nullable = false, unique = true)
 	private String code;
+
 	@Column(name = "LIBELLE", nullable = false)
 	private String libelle;
+
 	@Column(name = "TAUX_SALARIAL")
 	private BigDecimal tauxSalarial = BigDecimal.valueOf(0.00);
+
 	@Column(name = "TAUX_PATRONAL")
 	private BigDecimal tauxPatronal = BigDecimal.valueOf(0.00);
 

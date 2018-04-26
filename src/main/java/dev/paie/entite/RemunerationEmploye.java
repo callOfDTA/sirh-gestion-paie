@@ -10,19 +10,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "remuneration_employe")
+@Table(name = "employe")
 public class RemunerationEmploye {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
 	@Column(name = "MATRICULE", nullable = false, unique = true)
 	private String matricule;
+
 	@ManyToOne
 	@JoinColumn(name = "ENTREPRISE_ID", nullable = false)
 	private Entreprise entreprise;
+
 	@ManyToOne
 	@JoinColumn(name = "PROFIL_ID", nullable = false)
 	private ProfilRemuneration profilRemuneration;
+
 	@ManyToOne
 	@JoinColumn(name = "GRADE_ID", nullable = false)
 	private Grade grade;

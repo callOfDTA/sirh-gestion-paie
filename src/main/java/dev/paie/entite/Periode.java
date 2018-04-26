@@ -20,6 +20,16 @@ public class Periode {
 	@Column(name = "DATE_FIN", nullable = false)
 	private LocalDate dateFin;
 
+	public Periode() {
+
+	}
+
+	public Periode(LocalDate dateDebut, LocalDate dateFin) {
+		super();
+		this.dateDebut = dateDebut;
+		this.dateFin = dateFin;
+	}
+
 	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
