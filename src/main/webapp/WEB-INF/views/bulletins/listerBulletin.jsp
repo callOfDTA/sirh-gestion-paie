@@ -12,8 +12,20 @@
 </head>
 
 <body>
-	<div class="container">
+	<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    	<div>
+			<li class="nav-item">
+				<a class="nav-link" href="<%=request.getContextPath()%>/mvc/employes/lister">Employés</a>
+			</li>
+		</div>	
+		<div>
+			<li class="nav-item">
+				<a class="nav-link" href="<%=request.getContextPath()%>/mvc/bulletins/lister">Bulletins</a>
+			</li>
+		</div>
+	</ul>
 
+	<div class="container">
 		<h1>Bulletins</h1>
 	</div>
 

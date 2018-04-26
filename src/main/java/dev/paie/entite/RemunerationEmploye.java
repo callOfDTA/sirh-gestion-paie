@@ -1,5 +1,7 @@
 package dev.paie.entite;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 @Entity
@@ -30,6 +33,14 @@ public class RemunerationEmploye {
 	@ManyToOne
 	@JoinColumn(name = "GRADE_ID", nullable = false)
 	private Grade grade;
+
+	@Column(name = "HEURE_CREATION", nullable = false)
+	private LocalDateTime heureCreation;
+
+	@PrePersist
+	private void heureDeCreation() {
+		heureCreation = LocalDateTime.now();
+	}
 
 	public String getMatricule() {
 		return matricule;
@@ -71,4 +82,11 @@ public class RemunerationEmploye {
 		this.id = id;
 	}
 
+	public LocalDateTime getHeureCreation() {
+		return heureCreation;
+	}
+
+	public void setHeureCreation(LocalDateTime heureCreation) {
+		this.heureCreation = heureCreation;
+	}
 }

@@ -12,9 +12,49 @@
 </head>
 
 <body>
+	<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    	<div>
+			<li class="nav-item">
+				<a class="nav-link" href="<%=request.getContextPath()%>/mvc/employes/lister">Employés</a>
+			</li>
+		</div>	
+		<div>
+			<li class="nav-item">
+				<a class="nav-link" href="<%=request.getContextPath()%>/mvc/bulletins/lister">Bulletins</a>
+			</li>
+		</div>
+	</ul>
+
 	<div class="container">
 
 		<h1>Employés</h1>
+		
+		<div align="right" class="mr-2 mb-3">
+			<a href="<%=request.getContextPath()%>/mvc/employes/creer" class="btn btn-primary" role="button">Ajouter un employé</a>
+		</div>
+		
+		<div class="table-responsive mt-5">
+  			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Heure de création</th>
+						<th scope="col">Matricule</th>
+						<th scope="col">Grade</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${employes}" var="e">
+					<tr>
+						<th scope="row">${e.id}</th>
+						<td>${e.heureCreation}</td>
+						<td>${e.matricule}</td>
+						<td>${e.grade.code}</td>
+					</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
