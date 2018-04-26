@@ -6,12 +6,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html">
-<title>Insert title here</title>
+<title>Création employé</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css">
 
 </head>
 <body>
-	<a href="listerEmployer.jsp">Employés</a>
+	<a href="lister">Employés</a>
 	<a href="bulletin.jsp">Bulletins</a>
 
 

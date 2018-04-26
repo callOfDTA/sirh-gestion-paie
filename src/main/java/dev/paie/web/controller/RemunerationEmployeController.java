@@ -56,4 +56,12 @@ public class RemunerationEmployeController {
 		remunerationEmployeRepo.save(employePreRempli);
 		return mv;
 	}
+
+	@RequestMapping(method = RequestMethod.GET, path = "/lister")
+	public ModelAndView listerEmployeAffichage() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("employes/listerEmploye");
+		mv.addObject("employeList", remunerationEmployeRepo.findAll());
+		return mv;
+	}
 }

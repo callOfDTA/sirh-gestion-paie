@@ -2,6 +2,7 @@ package dev.paie.entite;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -9,7 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import dev.paie.listener.EmployeListener;
+
 @Entity
+@EntityListeners(EmployeListener.class)
 @Table(name = "remuneration_employe")
 public class RemunerationEmploye {
 
@@ -32,8 +36,26 @@ public class RemunerationEmploye {
 	@JoinColumn(name = "ID_GRADE", nullable = false)
 	private Grade grade;
 
+	@Column(name = "date_creation", nullable = false)
+	String dateCreation;
+
 	public RemunerationEmploye() {
 
+	}
+
+	/**
+	 * @return the dateCreation
+	 */
+	public String getDateCreation() {
+		return dateCreation;
+	}
+
+	/**
+	 * @param dateCreation
+	 *            the dateCreation to set
+	 */
+	public void setDateCreation(String dateCreation) {
+		this.dateCreation = dateCreation;
 	}
 
 	public String getMatricule() {
