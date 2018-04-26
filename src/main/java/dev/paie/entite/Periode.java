@@ -12,42 +12,47 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "periode")
 public class Periode {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@Column(name = "dateDebut", nullable = false)
 	private LocalDate dateDebut;
-	
+
 	@Column(name = "dateFin", nullable = false)
 	private LocalDate dateFin;
-	
-	public Periode(){
-		
+
+	public Periode() {
+
 	}
-	
+
+	public String getDuree() {
+		return String.format("%s - %s", this.dateDebut.toString(), this.dateFin.toString());
+	}
+
 	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
+
 	public void setDateDebut(LocalDate dateDebut) {
 		this.dateDebut = dateDebut;
 	}
+
 	public LocalDate getDateFin() {
 		return dateFin;
 	}
+
 	public void setDateFin(LocalDate dateFin) {
 		this.dateFin = dateFin;
 	}
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	
-	
-	
 
 }

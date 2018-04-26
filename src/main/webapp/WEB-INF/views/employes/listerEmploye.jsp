@@ -12,7 +12,7 @@
 <body>
 
 	<a href="creer">Employés</a>
-	<a href="bulletin.jsp">Bulletins</a>
+	<a href="/paie/mvc/bulletins/creer">Bulletins</a>
 
 	<div class="container">
 		<h1>Liste des employés</h1>
