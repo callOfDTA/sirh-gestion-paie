@@ -4,28 +4,24 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-
 <title>creerEmploye</title>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/bootstrap.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css">
 </head>
 <body>
-<body>
-	<a href="listerEmployer.jsp">Employés</a>
 	<a href="bulletin.jsp">Bulletins</a>
-
 
 	<div class="container">
 
 		<h1>Ajouter un employé</h1>
-
+		<a href="lister">Revenir à la liste</a>
 		<form:form method="post" modelAttribute="employeForm">
 			<div class="row">
 				<div class="col-4">
 					<label>Matricule</label>
 				</div>
 				<div class="col-6">
-					<form:input path="matricule" id="formMatricule" />
+				<!-- il faut aussi sécuriser niveau serveur -->
+					<form:input path="matricule" id="formMatricule" required="required"/>
 				</div>
 			</div>
 			<div class="row">
@@ -60,7 +56,7 @@
 				<div class="col-6">
 					<form:select path="grade.id" class="form-control" id="formGrade">
 					<c:forEach items="${gradeList}" var="g">
-						<form:option  value="g.id" label="${g.libelle}"></form:option>
+						<form:option  value="${g.id}" label="${g.libelle}"></form:option>
 					</c:forEach>
 						
 					</form:select>
@@ -70,6 +66,5 @@
 		</form:form>
 	</div>
 
-</body>
 </body>
 </html>

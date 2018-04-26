@@ -17,6 +17,6 @@ public class StartUpAppListener {
 	public void contextRefreshedEvent() {
 		// capture du démarrage de l'application
 		// à un moment où le contexte Spring est complètement créé
-		// initService.initialiser();//A commenter si besoin init + jpaconfig
+		// initService.initialiser();// A commenter si besoin init + jpaconfig
 	}
 }

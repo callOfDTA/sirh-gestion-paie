@@ -11,6 +11,7 @@ import dev.paie.entite.RemunerationEmploye;
 import dev.paie.repository.EntrepriseRepository;
 import dev.paie.repository.GradeRepository;
 import dev.paie.repository.ProfilRemunerationRepository;
+import dev.paie.repository.RemunerationEmployeRepository;
 
 @Controller
 @RequestMapping("/employes")
@@ -22,6 +23,8 @@ public class RemunerationEmployeController {
 	EntrepriseRepository entreRepo;
 	@Autowired
 	ProfilRemunerationRepository profRepo;
+	@Autowired
+	RemunerationEmployeRepository remuRepo;
 
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
 	public ModelAndView creerEmployeAffichage() {
@@ -45,6 +48,16 @@ public class RemunerationEmployeController {
 		mv.addObject("profilList", profRepo.findAll());
 		mv.addObject("gradeList", gradeRepo.findAll());
 		mv.addObject("matricule.id");
+		remuRepo.save(employePreRempli);
 		return mv;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, path = "/lister")
+	public ModelAndView listerEmployeAffichage() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("employes/listerEmploye");
+		mv.addObject("employeList", remuRepo.findAll());
+		return mv;
+
 	}
 }
