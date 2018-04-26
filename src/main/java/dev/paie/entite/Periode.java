@@ -38,6 +38,10 @@ public class Periode {
 		this.dateFin = dateFin;
 	}
 
+	public String getPeriodeLibelle() {
+		return String.format("%s - %s", this.dateDebut.toString(), this.dateFin.toString());
+	}
+
 	public LocalDate getDateDebut() {
 		return dateDebut;
 	}
