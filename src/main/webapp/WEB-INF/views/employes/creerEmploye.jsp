@@ -26,9 +26,10 @@
 					<form:label  path="matricule">Matricule</form:label>
 				</div>
 				<div class="col-6">
-					<form:input path="matricule" id="formMatricule"/>
+					<form:input path="matricule" id="formMatricule" required="required"/>
 				</div>
 			</div>
+		
 			
 			<div class="row">
 				<div class="col-3">
@@ -59,8 +60,8 @@
 				<div class="col-6">
 					<form:select path="grade.id" class="form-control" id="formGrade">
 						<c:forEach items="${gradeList}" var="g">
-							<form:option  value="g.id" label="${g.libelle}"></form:option>
-						</c:forEach>	
+							<form:option  value="${g.id}" label="${g.libelle}"></form:option>
+						</c:forEach>
 					</form:select>
 				</div>
 			</div>

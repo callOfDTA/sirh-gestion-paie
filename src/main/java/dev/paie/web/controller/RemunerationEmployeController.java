@@ -14,6 +14,7 @@ import dev.paie.entite.RemunerationEmploye;
 import dev.paie.repository.EntrepriseRepository;
 import dev.paie.repository.GradeRepository;
 import dev.paie.repository.ProfilRepository;
+import dev.paie.repository.RemunerationEmployeRepository;
 
 /**
  * @author ETY9
@@ -29,6 +30,8 @@ public class RemunerationEmployeController {
 	EntrepriseRepository entrepriseRepo;
 	@Autowired
 	ProfilRepository profilRepo;
+	@Autowired
+	RemunerationEmployeRepository remunerationEmployeRepo;
 
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
 	public ModelAndView creerEmployeAffichage() {
@@ -50,6 +53,7 @@ public class RemunerationEmployeController {
 		mv.addObject("gradeList", gradeRepo.findAll());
 		mv.addObject("entrepriseList", entrepriseRepo.findAll());
 		mv.addObject("profilList", profilRepo.findAll());
+		remunerationEmployeRepo.save(employePreRempli);
 		return mv;
 	}
 }

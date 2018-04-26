@@ -34,7 +34,7 @@ public class Grade {
 
 	public String getLibelle() {
 		return String.format("%s %s € / an", this.code, new PaieUtils()
-				.formaterBigDecimal(this.tauxBase.multiply((this.nbHeuresBase).multiply(BigDecimal.valueOf(12)))));
+				.formaterBigDecimal(this.tauxBase.multiply((this.nbHeuresBase).multiply(BigDecimal.valueOf(12.0)))));
 	}
 
 	public String getCode() {
