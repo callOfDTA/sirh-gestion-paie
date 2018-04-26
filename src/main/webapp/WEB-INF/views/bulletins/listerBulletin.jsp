@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>listerEmploye</title>
+<title>listerBulletin</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css/bootstrap.css">
 </head>
@@ -12,8 +12,8 @@
 	<a href="creerBulletin.jsp">Bulletins</a>
 
 	<div class="container">
-		<h1>Liste des employés</h1>
-		<a href="creer">Ajouter une Employé</a>
+		<h1>Liste des bulletins</h1>
+		<a href="creer">Ajouter un bulletin</a>
 		<div class="row">
 			<div class="col-6">
 				<label>Date/heure création</label>

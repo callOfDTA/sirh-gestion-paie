@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.css">
 </head>
 <body>
-	<a href="bulletin.jsp">Bulletins</a>
+	<a href="creerBulletin.jsp">Bulletins</a>
 
 	<div class="container">
 

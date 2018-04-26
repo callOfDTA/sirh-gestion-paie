@@ -48,4 +48,7 @@ public class Periode {
 		this.id = id;
 	}
 
+	public String getDuree() {
+		return String.format("%s - %s", this.dateDebut, this.dateFin);
+	}
 }
