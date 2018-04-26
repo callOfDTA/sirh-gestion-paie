@@ -12,10 +12,12 @@ import dev.paie.entite.Cotisation;
 import dev.paie.entite.Entreprise;
 import dev.paie.entite.Grade;
 import dev.paie.entite.Periode;
+import dev.paie.entite.ProfilRemuneration;
 import dev.paie.repository.CotisationRepository;
 import dev.paie.repository.EntrepriseRepository;
 import dev.paie.repository.GradeRepository;
 import dev.paie.repository.PeriodeRepository;
+import dev.paie.repository.ProfilRemunerationRepository;
 
 @Service
 public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
@@ -27,6 +29,8 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 	private GradeRepository gradeRepo;
 	@Autowired
 	private PeriodeRepository periodeRepository;
+	@Autowired
+	private ProfilRemunerationRepository profRepo;
 
 	@Override
 	public void initialiser() {
@@ -37,6 +41,7 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 			Map<String, Cotisation> idCotis = ctx.getBeansOfType(Cotisation.class);
 			Map<String, Grade> idGrade = ctx.getBeansOfType(Grade.class);
 			Map<String, Entreprise> idEntre = ctx.getBeansOfType(Entreprise.class);
+			Map<String, ProfilRemuneration> idProf = ctx.getBeansOfType(ProfilRemuneration.class);
 			idCotis.forEach((k, cotis) -> {
 				cotisRepo.save(cotis);
 			});
@@ -45,6 +50,9 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 			});
 			idEntre.forEach((k, entr) -> {
 				entreRepo.save(entr);
+			});
+			idProf.forEach((k, prof) -> {
+				profRepo.save(prof);
 			});
 			LocalDate today = LocalDate.now();
 			IntStream.rangeClosed(1, 12).forEach(i -> {
