@@ -13,7 +13,7 @@
 <body>
 
 	<a href="/paie/mvc/employes/lister">Employés</a>
-	<a href="creer">Bulletins</a>
+	<a href="lister">Bulletins</a>
 
 	<div class="container">
 

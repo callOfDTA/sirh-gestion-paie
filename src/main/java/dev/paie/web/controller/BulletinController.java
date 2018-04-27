@@ -14,6 +14,7 @@ import dev.paie.entite.BulletinSalaire;
 import dev.paie.repository.BulletinSalaireRepository;
 import dev.paie.repository.PeriodeRepository;
 import dev.paie.repository.RemunerationEmployeRepository;
+import dev.paie.service.CalculerRemunerationService;
 
 /**
  * @author ETY9
@@ -28,6 +29,8 @@ public class BulletinController {
 	PeriodeRepository periodeRepo;
 	@Autowired
 	BulletinSalaireRepository bulletinRepo;
+	@Autowired
+	CalculerRemunerationService crss;
 
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
 	public ModelAndView creerBulletinAffichage() {
@@ -51,4 +54,11 @@ public class BulletinController {
 		return mv;
 	}
 
+	@RequestMapping(method = RequestMethod.GET, path = "/lister")
+	public ModelAndView listerBulletinAffichage() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bulletins/listerBulletin");
+		mv.addObject("bulletinList", crss.calculerBulletin());
+		return mv;
+	}
 }

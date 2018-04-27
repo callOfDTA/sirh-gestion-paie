@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,7 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import dev.paie.listener.BulletinListener;
+
 @Entity
+@EntityListeners(BulletinListener.class)
 @Table(name = "BulletinSalaire")
 public class BulletinSalaire {
 
@@ -30,8 +34,26 @@ public class BulletinSalaire {
 	@Column(name = "primeExceptionnelle")
 	private BigDecimal primeExceptionnelle;
 
+	@Column(name = "date_creation", nullable = false)
+	String dateCreation;
+
 	public BulletinSalaire() {
 
+	}
+
+	/**
+	 * @return the dateCreation
+	 */
+	public String getDateCreation() {
+		return dateCreation;
+	}
+
+	/**
+	 * @param dateCreation
+	 *            the dateCreation to set
+	 */
+	public void setDateCreation(String dateCreation) {
+		this.dateCreation = dateCreation;
 	}
 
 	public RemunerationEmploye getRemunerationEmploye() {
