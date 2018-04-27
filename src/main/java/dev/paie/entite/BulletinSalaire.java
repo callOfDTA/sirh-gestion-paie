@@ -1,6 +1,8 @@
 package dev.paie.entite;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 @Entity
@@ -29,6 +32,24 @@ public class BulletinSalaire {
 
 	@Column(name = "PRIME_EXCEPTIONNELLE")
 	private BigDecimal primeExceptionnelle;
+
+	@Column(name = "DATE_CREATION", nullable = false)
+	private ZonedDateTime dateCreation;
+
+	public String getDateCreationLibelle() {
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy  hh:mm:ss");
+		return this.dateCreation.format(format);
+	}
+
+	public ZonedDateTime getDateCreation() {
+		return this.dateCreation;
+	}
+
+	@PrePersist
+	private void setDateCreation() {
+		this.dateCreation = ZonedDateTime.now();
+
+	}
 
 	public RemunerationEmploye getRemunerationEmploye() {
 		return remunerationEmploye;

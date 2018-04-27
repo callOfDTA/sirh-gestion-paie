@@ -1,60 +1,105 @@
 package dev.paie.service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
+import java.util.Map;
+import java.util.function.BinaryOperator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dev.paie.entite.BulletinSalaire;
 import dev.paie.entite.Cotisation;
 import dev.paie.entite.Grade;
-import dev.paie.entite.ProfilRemuneration;
 import dev.paie.entite.ResultatCalculRemuneration;
+import dev.paie.repository.BulletinSalaireRepository;
 import dev.paie.util.PaieUtils;
 
 @Service
 public class CalculerRemunerationServiceSimple implements CalculerRemunerationService {
 
+	@Autowired
+	private PaieUtils paieUtils;
+
+	@Autowired
+	BulletinSalaireRepository bulletinRepo;
+
+	@Transactional
+	public Map<BulletinSalaire, ResultatCalculRemuneration> calculerTousLesBulletin() {
+
+		Map<BulletinSalaire, ResultatCalculRemuneration> map;
+
+		map = bulletinRepo.findAll().stream()
+				.collect(Collectors.toMap(bulletin -> bulletin, bulletin -> this.calculer(bulletin)));
+
+		return map;
+
+	}
+
+	@Transactional
 	@Override
 	public ResultatCalculRemuneration calculer(BulletinSalaire bulletin) {
-		PaieUtils pu = new PaieUtils();
-		
-		
-		ResultatCalculRemuneration res = new ResultatCalculRemuneration();
+		ResultatCalculRemuneration remu = new ResultatCalculRemuneration();
 		Grade grade = bulletin.getRemunerationEmploye().getGrade();
-		ProfilRemuneration profil = bulletin.getRemunerationEmploye().getProfilRemuneration();
-		
-		BigDecimal salaireDeBase = (grade.getNbHeuresBase().multiply(grade.getTauxBase()));
-		BigDecimal salaireBrut = (salaireDeBase.add(bulletin.getPrimeExceptionnelle()));
-		
-		ToDoubleFunction<Cotisation> func1 = c -> (c.getTauxSalarial().multiply(salaireBrut).doubleValue());
-		ToDoubleFunction<Cotisation> func2 = c -> (c.getTauxPatronal().multiply(salaireBrut).doubleValue());
-		
-		
-		
-		BigDecimal totalRetenue = BigDecimal.valueOf(profil.getCotisationsNonImposables().stream().mapToDouble(func1).sum());
-		BigDecimal totalCotisation = BigDecimal.valueOf(profil.getCotisationsNonImposables().stream().mapToDouble(func2).sum());
-		
-		
-		
-		res.setSalaireBrut(pu.formaterBigDecimal(salaireBrut));
-		res.setSalaireDeBase(pu.formaterBigDecimal(salaireDeBase));
-		res.setTotalCotisationsPatronales(pu.formaterBigDecimal(totalCotisation));
-		res.setTotalRetenueSalarial(pu.formaterBigDecimal(totalRetenue));
 
-		ToDoubleFunction<Cotisation> func3 = c -> (c.getTauxSalarial().multiply(new BigDecimal(res.getSalaireBrut())).doubleValue());
+		// SALAIRE_BASE = GRADE.NB_HEURES_BASE * GRADE.TAUX_BASE
+		BigDecimal salaireBase = grade.getNbHeuresBase().multiply(grade.getTauxBase());
 
-		BigDecimal netImposable = new BigDecimal(res.getSalaireBrut()).subtract(new BigDecimal(res.getTotalRetenueSalarial()));
-		
-		res.setNetImposable(pu.formaterBigDecimal(netImposable));
+		// SALAIRE_BRUT = SALAIRE_BASE + PRIME_EXCEPTIONNELLE
+		BigDecimal salaireBrut = salaireBase.add(bulletin.getPrimeExceptionnelle());
 
-		BigDecimal netAPayer = new BigDecimal(res.getNetImposable()).subtract(BigDecimal.valueOf(profil.getCotisationsImposables().stream().mapToDouble(func3).sum()));
-		
-		res.setNetAPayer(pu.formaterBigDecimal(netAPayer));
-		
-		
-		return res;
+		BigDecimal totalRetenueSalariale = BigDecimal.ZERO;
+		BigDecimal totalCotisationsPatronales = BigDecimal.ZERO;
+
+		try (Stream<Cotisation> cotisationsNonImposables = bulletin.getRemunerationEmploye().getProfilRemuneration()
+				.getCotisationsNonImposables().stream()) {
+
+			BinaryOperator<BigDecimal> binaryOperator = BigDecimal::add;
+
+			// TOTAL_RETENUE_SALARIALE =
+			// SOMME(COTISATION_NON_IMPOSABLE.TAUX_SALARIAL*SALAIRE_BRUT)
+			totalRetenueSalariale = cotisationsNonImposables.filter(c -> c.getTauxSalarial() != null)
+					.map(c -> c.getTauxSalarial().multiply(salaireBrut)).reduce(binaryOperator).orElse(BigDecimal.ZERO);
+		}
+
+		try (Stream<Cotisation> cotisationsNonImposables = bulletin.getRemunerationEmploye().getProfilRemuneration()
+				.getCotisationsNonImposables().stream()) {
+
+			BinaryOperator<BigDecimal> binaryOperator = BigDecimal::add;
+
+			// TOTAL_COTISATIONS_PATRONALES =
+			// SOMME(COTISATION_NON_IMPOSABLE.TAUX_PATRONAL*SALAIRE_BRUT)
+			totalCotisationsPatronales = cotisationsNonImposables.filter(c -> c.getTauxPatronal() != null)
+					.map(c -> c.getTauxPatronal().multiply(salaireBrut)).reduce(BigDecimal.ZERO, binaryOperator);
+		}
+
+		BigDecimal totalCotisationsImposables = BigDecimal.ZERO;
+
+		try (Stream<Cotisation> cotisationsImposables = bulletin.getRemunerationEmploye().getProfilRemuneration()
+				.getCotisationsImposables().stream()) {
+
+			totalCotisationsImposables = cotisationsImposables.filter(c -> c.getTauxSalarial() != null)
+					.map(c -> c.getTauxSalarial().multiply(salaireBrut)).reduce(BigDecimal::add)
+					.orElse(BigDecimal.ZERO);
+		}
+
+		remu.setSalaireDeBase(paieUtils.formaterBigDecimal(salaireBase));
+		remu.setSalaireBrut(paieUtils.formaterBigDecimal(salaireBrut));
+		remu.setTotalRetenueSalarial(paieUtils.formaterBigDecimal(totalRetenueSalariale));
+		remu.setTotalCotisationsPatronales(paieUtils.formaterBigDecimal(totalCotisationsPatronales));
+
+		// NET_IMPOSABLE = SALAIRE_BRUT - TOTAL_RETENUE_SALARIALE
+		BigDecimal netImposable = new BigDecimal(remu.getSalaireBrut())
+				.subtract(new BigDecimal(remu.getTotalRetenueSalarial()));
+		remu.setNetImposable(paieUtils.formaterBigDecimal(netImposable));
+
+		// NET_A_PAYER = NET_IMPOSABLE -
+		// SOMME(COTISATION_IMPOSABLE.TAUX_SALARIAL*SALAIRE_BRUT)
+		BigDecimal netAPayer = new BigDecimal(remu.getNetImposable()).subtract(totalCotisationsImposables);
+
+		remu.setNetAPayer(paieUtils.formaterBigDecimal(netAPayer));
+		return remu;
 	}
 }

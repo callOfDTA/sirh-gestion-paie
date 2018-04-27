@@ -1,12 +1,14 @@
 package dev.paie.util;
 
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class PaieUtils {
 
 	/**

@@ -9,10 +9,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"
 	href='<c:url value="/bootstrap/css/bootstrap.css"/>'>
-<title>SIRH - Liste des bulletins de salaires</title>
+<title>SIRH - Bulletins de salaire</title>
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light"> <a
+<nav class="navbar navbar-expand-lg navbar-light bg-light"> <a
 		class="navbar-brand" href="#">LOGO</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarSupportedContent"
@@ -29,57 +29,15 @@
 		</ul>
 	</div>
 	</nav>
-
-
-
-
-
+	
 	<div class="container">
-
-		<h1>Ajouter un Employe</h1>
-
-
-
-		<div class="row justify-content-end">
-			<form:form method="post">
-				<input type="submit" class="btn btn-primary"
-					value="Créer un nouveau  bulletin" />
-			</form:form>
-		</div>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th scope="col">Date/Heure création</th>
-					<th scope="col">Période</th>
-					<th scope="col">Matricule</th>
-					<th scope="col">Salaire brut</th>
-					<th scope="col">Net imposable</th>
-					<th scope="col">Net à payer</th>
-					<th scope="col">Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${bulletins }" var="map">
-					<tr>
-						<td>${map.key.dateCreationLibelle}</td>
-						<td>${map.key.periode.periodeLibelle}</td>
-						<td>${map.key.remunerationEmploye.matricule}</td>
-						<td>${map.value.salaireBrut}</td>
-						<td>${map.value.netImposable}</td>
-						<td>${map.value.netAPayer}</td>
-						<td>
-						<a href='<c:url value="visualiser?id=${map.key.id }"/>' >Visualiser</a>
-						</td>
-
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+	
+	
 	</div>
-
-
-
-
+	
+	
+	
+	
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
