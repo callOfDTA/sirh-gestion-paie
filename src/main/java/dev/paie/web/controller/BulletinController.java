@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.paie.entite.BulletinSalaire;
@@ -59,6 +60,16 @@ public class BulletinController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bulletins/listerBulletin");
 		mv.addObject("bulletinList", crss.calculerBulletin());
+		return mv;
+	}
+
+	@RequestMapping(method = RequestMethod.GET, path = "/visualise")
+	public ModelAndView visualiseBulletinAffichage(@RequestParam("id") String id) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("bulletins/visualiseBulletin");
+
+		mv.addObject("bulletin", bulletinRepo.findById(Integer.parseInt(id)));
+		mv.addObject("calc", crss.calculer(bulletinRepo.findById(Integer.parseInt(id))));
 		return mv;
 	}
 }

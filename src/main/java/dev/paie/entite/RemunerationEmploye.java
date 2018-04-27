@@ -14,6 +14,7 @@ import dev.paie.listener.EmployeListener;
 
 @Entity
 @EntityListeners(EmployeListener.class)
+
 @Table(name = "remuneration_employe")
 public class RemunerationEmploye {
 

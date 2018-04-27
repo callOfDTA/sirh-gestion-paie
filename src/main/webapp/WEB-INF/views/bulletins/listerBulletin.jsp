@@ -12,7 +12,7 @@
 </head>
 <body>
 
-	<a href="/paie/mvc/employes/creer">Employés</a>
+	<a href="/paie/mvc/employes/lister">Employés</a>
 	<a href="creer">Bulletins</a>
 
 	<div class="container">
@@ -37,7 +37,7 @@
 				<div class="col-1">${b.value.salaireBrut}</div>
 				<div class="col-1">${b.value.netImposable}</div>
 				<div class="col-1">${b.value.netAPayer}</div>
-				<div class="col-1"><a href="affBulletin">Visualiser</a></div>
+				<div class="col-1"><a href="visualise?id=${b.key.id}">Visualiser</a></div>
 			</c:forEach>
 		</div>
 	</div>
