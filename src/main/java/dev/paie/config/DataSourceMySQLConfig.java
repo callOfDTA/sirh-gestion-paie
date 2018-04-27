@@ -6,9 +6,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class DataSourceMySQLConfig.
+ */
 @Configuration
 public class DataSourceMySQLConfig {
-	
+
+	/**
+	 * Data source.
+	 *
+	 * @return the data source
+	 */
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();

@@ -11,15 +11,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class BulletinSalaire.
+ * The Class BulletinSalaire. L'utilisation de l'entity graph permet d'empecher
+ * de mettre l'etat de entité en lazy
  */
 @Entity
 @Table(name = "bulletinSalaire")
+@NamedEntityGraph(name = "BulletinSalaire.AvecCotisations", attributeNodes = {
+		@NamedAttributeNode(value = "remunerationEmploye", subgraph = "RemunerationEmploye.AvecCotisations") }, subgraphs = {
+				@NamedSubgraph(name = "RemunerationEmploye.AvecCotisations", attributeNodes = {
+						@NamedAttributeNode(value = "profilRemuneration", subgraph = "ProfilRemuneration.AvecCotisations") }),
+				@NamedSubgraph(name = "ProfilRemuneration.AvecCotisations", attributeNodes = {
+						@NamedAttributeNode(value = "cotisationsNonImposables"),
+						@NamedAttributeNode(value = "cotisationsImposables") }) })
 public class BulletinSalaire {
 
 	/** The id. */
@@ -41,6 +52,7 @@ public class BulletinSalaire {
 	@Column(name = "primeExceptionnelle")
 	private BigDecimal primeExceptionnelle;
 
+	/** The date creation. */
 	@Column(name = "dateCreation")
 	private ZonedDateTime dateCreation;
 
@@ -50,16 +62,26 @@ public class BulletinSalaire {
 	public BulletinSalaire() {
 	}
 
+	/**
+	 * Sets the date time creation.
+	 */
 	@PrePersist
 	private void setDateTimeCreation() {
 		this.dateCreation = ZonedDateTime.now();
 	}
 
+	/**
+	 * Gets the date creation libelle.
+	 *
+	 * @return the date creation libelle
+	 */
 	public String getDateCreationLibelle() {
 		return this.dateCreation.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 	}
 
 	/**
+	 * Gets the date creation.
+	 *
 	 * @return the dateCreation
 	 */
 	public ZonedDateTime getDateCreation() {
@@ -68,6 +90,8 @@ public class BulletinSalaire {
 	}
 
 	/**
+	 * Sets the date creation.
+	 *
 	 * @param dateCreation
 	 *            the dateCreation to set
 	 */

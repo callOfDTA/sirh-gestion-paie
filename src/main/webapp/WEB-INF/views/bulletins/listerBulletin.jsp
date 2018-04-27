@@ -14,9 +14,9 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<ul class="navbar-nav mr-auto">
-		<li class="nav-item active"><a class="nav-link" href="#">Employés</a>
+		<li class="nav-item active"><a class="nav-link" href='<c:url value="/mvc/employes/lister"/>'>Employés</a>
 		</li>
-		<li class="nav-item active"><a class="nav-link" href="#">Bulletins</a>
+		<li class="nav-item active"><a class="nav-link" href='<c:url value="/mvc/bulletins/lister"/>'>Bulletins</a>
 		</li>
 	</ul>
 	</nav>

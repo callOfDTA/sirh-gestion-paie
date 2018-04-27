@@ -13,9 +13,21 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class JpaConfig.
+ */
 @Configuration
 @EnableTransactionManagement
 public class JpaConfig {
+
+	/**
+	 * Transaction manager.
+	 *
+	 * @param emf
+	 *            the emf
+	 * @return the platform transaction manager
+	 */
 	@Bean
 	public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
 		JpaTransactionManager txManager = new JpaTransactionManager();
@@ -25,6 +37,13 @@ public class JpaConfig {
 
 	// Cette configuration nécessite une source de données configurée.
 	// Elle s'utilise donc en association avec un autre fichier de configuration
+	/**
+	 * Entity manager factory.
+	 *
+	 * @param dataSource
+	 *            the data source
+	 * @return the entity manager factory
+	 */
 	// définissant un bean DataSource.
 	@Bean
 	public EntityManagerFactory entityManagerFactory(DataSource dataSource) {

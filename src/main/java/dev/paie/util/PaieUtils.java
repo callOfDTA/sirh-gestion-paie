@@ -8,12 +8,20 @@ import java.util.Locale;
 
 import org.springframework.stereotype.Component;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PaieUtils.
+ */
 @Component
 public class PaieUtils {
+	
 	/**
 	 * Formate un nombre sous la forme xx.xx (exemple : 2.00, 1.90). L'arrondi  
 	 * * se fait en mode "UP" => 1.904 devient 1.91   *   * @param decimal
 	 * nombre à formater   * @return le nombre formaté  
+	 *
+	 * @param decimal the decimal
+	 * @return the string
 	 */
 	public String formaterBigDecimal(BigDecimal decimal) {
 		DecimalFormat df = new DecimalFormat();

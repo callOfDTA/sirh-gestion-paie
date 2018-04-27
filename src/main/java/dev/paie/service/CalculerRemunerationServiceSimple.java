@@ -17,19 +17,34 @@ import dev.paie.entite.ResultatCalculRemuneration;
 import dev.paie.repository.BulletinSalaireRepository;
 import dev.paie.util.PaieUtils;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CalculerRemunerationServiceSimple.
+ */
 @Service
 public class CalculerRemunerationServiceSimple implements CalculerRemunerationService {
 
+	/** The paie utils. */
 	@Autowired
 	private PaieUtils paieUtils = new PaieUtils();
 
+	/** The bulletin repo. */
 	@Autowired
 	private BulletinSalaireRepository bulletinRepo;
 
+	/**
+	 * Instantiates a new calculer remuneration service simple.
+	 */
 	public CalculerRemunerationServiceSimple() {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see dev.paie.service.CalculerRemunerationService#calculerTousBulletins()
+	 */
+	/*
+	 * Permet de réaliser les calculs sur chaque bulletins
+	 */
 	@Override
 	@Transactional
 	public Map<BulletinSalaire, ResultatCalculRemuneration> calculerTousBulletins() {
@@ -37,6 +52,12 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 				.collect(Collectors.toMap(bulletin -> bulletin, bulletin -> this.calculer(bulletin)));
 	}
 
+	/* (non-Javadoc)
+	 * @see dev.paie.service.CalculerRemunerationService#calculer(dev.paie.entite.BulletinSalaire)
+	 */
+	/*
+	 * Permet de faire tout les calculs pour un bulletin
+	 */
 	@Override
 	public ResultatCalculRemuneration calculer(BulletinSalaire bulletin) {
 		ResultatCalculRemuneration remu = new ResultatCalculRemuneration();

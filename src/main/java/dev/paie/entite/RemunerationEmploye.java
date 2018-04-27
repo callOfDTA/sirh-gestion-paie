@@ -19,6 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Employe")
+
 public class RemunerationEmploye {
 
 	/** The id. */
@@ -45,19 +46,30 @@ public class RemunerationEmploye {
 	@JoinColumn(name = "GRADE_ID", nullable = false)
 	private Grade grade;
 
+	/** The date creation. */
 	@Column(name = "dateCreation")
 	private ZonedDateTime dateCreation;
 
+	/**
+	 * Sets the date time creation.
+	 */
 	@PrePersist
 	private void setDateTimeCreation() {
 		this.dateCreation = ZonedDateTime.now();
 	}
 
+	/**
+	 * Gets the date creation libelle.
+	 *
+	 * @return the date creation libelle
+	 */
 	public String getDateCreationLibelle() {
 		return this.dateCreation.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 	}
 
 	/**
+	 * Gets the date creation.
+	 *
 	 * @return the dateCreation
 	 */
 	public ZonedDateTime getDateCreation() {
@@ -66,6 +78,8 @@ public class RemunerationEmploye {
 	}
 
 	/**
+	 * Sets the date creation.
+	 *
 	 * @param dateCreation
 	 *            the dateCreation to set
 	 */

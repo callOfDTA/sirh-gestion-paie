@@ -19,16 +19,27 @@ import dev.paie.entite.Grade;
 import dev.paie.entite.Periode;
 import dev.paie.entite.ProfilRemuneration;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class InitialiserDonneesServiceDev.
+ */
 @Service
 public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 
+	/** The em. */
 	@PersistenceContext
 	private EntityManager em;
 
+	/**
+	 * Instantiates a new initialiser donnees service dev.
+	 */
 	public InitialiserDonneesServiceDev() {
 		// TODO Auto-generated constructor stub
 	}
 
+	/*
+	 * Permet d'initialiser la base de données gestion paie
+	 */
 	@Override
 	@Transactional
 	public void initialiser() {
@@ -41,8 +52,6 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 
 		List<Periode> listPeriode = new ArrayList<>();
 		int year = LocalDate.now().getYear();
-
-		// LocalDate debut, fin;
 
 		IntStream.rangeClosed(1, 12).forEach(i -> {
 			LocalDate debut = LocalDate.of(year, i, 01);

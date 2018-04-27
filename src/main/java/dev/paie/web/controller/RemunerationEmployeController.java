@@ -13,22 +13,35 @@ import dev.paie.repository.GradeRepository;
 import dev.paie.repository.ProfilRemunerationRepository;
 import dev.paie.repository.RemunerationEmployeRepository;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RemunerationEmployeController.
+ */
 @Controller
 @RequestMapping("/employes")
 public class RemunerationEmployeController {
 
+	/** The grades repo. */
 	@Autowired
 	private GradeRepository gradesRepo;
 
+	/** The entreprises repo. */
 	@Autowired
 	private EntrepriseRepository entreprisesRepo;
 
+	/** The profils repo. */
 	@Autowired
 	private ProfilRemunerationRepository profilsRepo;
 
+	/** The employes repo. */
 	@Autowired
 	private RemunerationEmployeRepository employesRepo;
 
+	/**
+	 * Creer employe get.
+	 *
+	 * @return the model and view
+	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
 	public ModelAndView creerEmployeGet() {
 		ModelAndView mv = new ModelAndView();
@@ -42,6 +55,12 @@ public class RemunerationEmployeController {
 		return mv;
 	}
 
+	/**
+	 * Creer employe post.
+	 *
+	 * @param employe the employe
+	 * @return the model and view
+	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/creer")
 	public ModelAndView creerEmployePost(@ModelAttribute("RemunerationEmploye") RemunerationEmploye employe) {
 		ModelAndView mv = new ModelAndView();
@@ -50,6 +69,11 @@ public class RemunerationEmployeController {
 		return mv;
 	}
 
+	/**
+	 * Lister employe get.
+	 *
+	 * @return the model and view
+	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")
 	public ModelAndView listerEmployeGet() {
 		ModelAndView mv = new ModelAndView();
@@ -59,6 +83,11 @@ public class RemunerationEmployeController {
 		return mv;
 	}
 
+	/**
+	 * Lister employe post.
+	 *
+	 * @return the model and view
+	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/lister")
 	public ModelAndView listerEmployePost() {
 		ModelAndView mv = new ModelAndView();

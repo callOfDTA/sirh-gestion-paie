@@ -160,9 +160,7 @@ public class Cotisation {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	 * Permet un affichage formater d'une cotisation
 	 */
 	@Override
 	public String toString() {
@@ -171,9 +169,7 @@ public class Cotisation {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	 * Permet de comparer deux Cotisations sans prendre en compte leurs ids.
 	 */
 	@Override
 	public boolean equals(Object o) {

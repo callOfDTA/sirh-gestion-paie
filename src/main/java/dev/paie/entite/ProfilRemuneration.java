@@ -1,6 +1,7 @@
 package dev.paie.entite;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "PROFILREMUNERATION")
+
 public class ProfilRemuneration {
 
 	/** The id. */
@@ -32,12 +34,12 @@ public class ProfilRemuneration {
 	/** The cotisations non imposables. */
 	@ManyToMany
 	@JoinTable(name = "PR_NONIMP", joinColumns = @JoinColumn(name = "PR_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "COT_ID", referencedColumnName = "ID"))
-	private List<Cotisation> cotisationsNonImposables;
+	private Set<Cotisation> cotisationsNonImposables;
 
 	/** The cotisations imposables. */
 	@ManyToMany
 	@JoinTable(name = "PR_IMP", joinColumns = @JoinColumn(name = "PR_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "COT_ID", referencedColumnName = "ID"))
-	private List<Cotisation> cotisationsImposables;
+	private Set<Cotisation> cotisationsImposables;
 
 	/** The avantages. */
 	@ManyToMany
@@ -93,7 +95,7 @@ public class ProfilRemuneration {
 	 *
 	 * @return the cotisations non imposables
 	 */
-	public List<Cotisation> getCotisationsNonImposables() {
+	public Set<Cotisation> getCotisationsNonImposables() {
 		return cotisationsNonImposables;
 	}
 
@@ -103,7 +105,7 @@ public class ProfilRemuneration {
 	 * @param cotisationsNonImposables
 	 *            the new cotisations non imposables
 	 */
-	public void setCotisationsNonImposables(List<Cotisation> cotisationsNonImposables) {
+	public void setCotisationsNonImposables(Set<Cotisation> cotisationsNonImposables) {
 		this.cotisationsNonImposables = cotisationsNonImposables;
 	}
 
@@ -112,7 +114,7 @@ public class ProfilRemuneration {
 	 *
 	 * @return the cotisations imposables
 	 */
-	public List<Cotisation> getCotisationsImposables() {
+	public Set<Cotisation> getCotisationsImposables() {
 		return cotisationsImposables;
 	}
 
@@ -122,7 +124,7 @@ public class ProfilRemuneration {
 	 * @param cotisationsImposables
 	 *            the new cotisations imposables
 	 */
-	public void setCotisationsImposables(List<Cotisation> cotisationsImposables) {
+	public void setCotisationsImposables(Set<Cotisation> cotisationsImposables) {
 		this.cotisationsImposables = cotisationsImposables;
 	}
 

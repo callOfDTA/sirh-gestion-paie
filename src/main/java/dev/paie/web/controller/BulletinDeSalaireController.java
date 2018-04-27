@@ -14,22 +14,35 @@ import dev.paie.repository.PeriodeRepository;
 import dev.paie.repository.RemunerationEmployeRepository;
 import dev.paie.service.CalculerRemunerationService;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BulletinDeSalaireController.
+ */
 @Controller
 @RequestMapping("/bulletins")
 public class BulletinDeSalaireController {
 
+	/** The employes repo. */
 	@Autowired
 	private RemunerationEmployeRepository employesRepo;
 
+	/** The bulletin repo. */
 	@Autowired
 	private BulletinSalaireRepository bulletinRepo;
 
+	/** The periode repo. */
 	@Autowired
 	private PeriodeRepository periodeRepo;
 
+	/** The calc. */
 	@Autowired
 	private CalculerRemunerationService calc;
 
+	/**
+	 * Creer bulletin get.
+	 *
+	 * @return the model and view
+	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
 	public ModelAndView creerBulletinGet() {
 		ModelAndView mv = new ModelAndView();
@@ -42,6 +55,13 @@ public class BulletinDeSalaireController {
 		return mv;
 	}
 
+	/**
+	 * Creer bulletin post.
+	 *
+	 * @param bulletin
+	 *            the bulletin
+	 * @return the model and view
+	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/creer")
 	public ModelAndView creerBulletinPost(@ModelAttribute("BulletinSalaire") BulletinSalaire bulletin) {
 		ModelAndView mv = new ModelAndView();
@@ -50,6 +70,11 @@ public class BulletinDeSalaireController {
 		return mv;
 	}
 
+	/**
+	 * Lister bulletin get.
+	 *
+	 * @return the model and view
+	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")
 	public ModelAndView listerBulletinGet() {
 		ModelAndView mv = new ModelAndView();
@@ -59,6 +84,11 @@ public class BulletinDeSalaireController {
 		return mv;
 	}
 
+	/**
+	 * Lister bulletin post.
+	 *
+	 * @return the model and view
+	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/lister")
 	public ModelAndView listerBulletinPost() {
 		ModelAndView mv = new ModelAndView();
@@ -67,14 +97,29 @@ public class BulletinDeSalaireController {
 		return mv;
 	}
 
+	/**
+	 * Visualiser bulletin get.
+	 *
+	 * @param bulletinId
+	 *            the bulletin id
+	 * @return the model and view
+	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/visualiser")
 	public ModelAndView visualiserBulletinGet(@RequestParam("id") Integer bulletinId) {
 		ModelAndView mv = new ModelAndView();
 
+		BulletinSalaire bulletinSalaire = bulletinRepo.findById(bulletinId);
+		mv.addObject("bulletin", bulletinSalaire);
+		mv.addObject("resultat", calc.calculer(bulletinSalaire));
 		mv.setViewName("bulletins/visualiserBulletin");
 		return mv;
 	}
 
+	/**
+	 * Visualiser bulletin post.
+	 *
+	 * @return the model and view
+	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/visualiser")
 	public ModelAndView visualiserBulletinPost() {
 		ModelAndView mv = new ModelAndView();

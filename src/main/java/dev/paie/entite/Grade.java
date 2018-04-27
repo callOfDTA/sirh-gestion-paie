@@ -155,9 +155,7 @@ public class Grade {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	 * Permet l'affichage formater d'un grade
 	 */
 	@Override
 	public String toString() {
@@ -165,9 +163,7 @@ public class Grade {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	 * Permet de comparer deux grade sans prendre en compte leurs id
 	 */
 	@Override
 	public boolean equals(Object o) {

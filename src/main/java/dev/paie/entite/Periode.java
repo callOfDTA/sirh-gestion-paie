@@ -31,8 +31,10 @@ public class Periode {
 	private LocalDate dateFin;
 
 	/**
-	 * @param dateDebut
-	 * @param dateFin
+	 * Instantiates a new periode.
+	 *
+	 * @param dateDebut the date debut
+	 * @param dateFin the date fin
 	 */
 	public Periode(LocalDate dateDebut, LocalDate dateFin) {
 		super();
@@ -40,6 +42,11 @@ public class Periode {
 		this.dateFin = dateFin;
 	}
 
+	/**
+	 * Gets the periode libelle.
+	 *
+	 * @return the periode libelle
+	 */
 	public String getPeriodeLibelle() {
 		return String.format("%s - %s", this.dateDebut.toString(), this.dateFin.toString());
 	}

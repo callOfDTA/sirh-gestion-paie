@@ -136,7 +136,7 @@ public class Avantage {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see java.lang.Object#toString()
+	 * Permet un affichage formater d'un avantage
 	 */
 	@Override
 	public String toString() {
