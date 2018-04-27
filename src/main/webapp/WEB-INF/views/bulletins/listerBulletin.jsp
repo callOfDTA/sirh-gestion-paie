@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/bootstrap/css/bootstrap.min.css">
-<title>Creer Employe</title>
+<title>Lister Bulletin</title>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -21,8 +21,41 @@
 	</ul>
 	</nav>
 	<div class="container">
-		<h1>Lister Employe</h1>
+		<h1>Lister Bulletin</h1>
 
+		<form:form method="post">
+			<div class="row justify-content-end">
+				<input type="submit" class="btn btn-primary"
+					value="Créer un nouveau bulletin">
+			</div>
+		</form:form>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Date/Heure création</th>
+					<th scope="col">Période</th>
+					<th scope="col">Matricule</th>
+					<th scope="col">Salaire brut</th>
+					<th scope="col">Net Imposable</th>
+					<th scope="col">Net A Payer</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<c:forEach items="${bulletins}" var="b">
+				<tbody>
+					<tr>
+						<td>${b.key.dateCreationLibelle}</td>
+						<td>${b.key.periode.periodeLibelle}</td>
+						<td>${b.key.remunerationEmploye.matricule}</td>
+						<td>${b.value.salaireBrut}</td>
+						<td>${b.value.netImposable}</td>
+						<td>${b.value.netAPayer}</td>
+						<td>${b.value.netAPayer}</td>
+						<td><a href='<c:url value="visualiser?id=${b.key.id}"/>'>Visualiser</a></td>
+					</tr>
+				</tbody>
+			</c:forEach>
+		</table>
 	</div>
 
 
