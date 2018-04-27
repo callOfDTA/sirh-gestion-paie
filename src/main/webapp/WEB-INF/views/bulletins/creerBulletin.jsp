@@ -14,7 +14,6 @@
   	</head>
   	
   	<body>
-    	<h1>Créer Bulletin de Salaire</h1>
 
     	<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
           	<div>
@@ -30,7 +29,9 @@
       	</ul>
       	
       	<div class="container">
-      		<form:form method="post" modelAttribute="Bulletin" style="width: 35rem">
+      		<h1>Créer Bulletin de Salaire</h1>
+      	
+      		<form:form class="mt-5" method="post" modelAttribute="Bulletin" style="width: 35rem">
  				<div class="form-group row">
  					<label for="periode">Période</label>		
     				<form:select path="periode.id" class="form-control" id="formPeriode">	

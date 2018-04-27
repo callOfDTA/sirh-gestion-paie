@@ -60,7 +60,7 @@
 							<td>${r.value.netImposable}€</td>
 							<td>${r.value.netAPayer}€</td>
 							<td>
-								<a class="nav-link" href="<%=request.getContextPath()%>/mvc/bulletins/visualiser">Visualiser</a>
+								<a class="nav-link" href="<%=request.getContextPath()%>/mvc/bulletins/visualiser?ID=${r.key.id}">Visualiser</a>
 							</td>
 						</tr>
 					</c:forEach>

@@ -1,20 +1,21 @@
+
 package dev.paie.service;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.function.BinaryOperator;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dev.paie.entite.BulletinSalaire;
+import dev.paie.entite.Cotisation;
 import dev.paie.entite.Grade;
-import dev.paie.entite.ProfilRemuneration;
 import dev.paie.entite.ResultatCalculRemuneration;
 import dev.paie.repository.BulletinSalaireRepository;
 import dev.paie.util.PaieUtils;
@@ -24,57 +25,71 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 	@Autowired
 	private BulletinSalaireRepository bulletinRepository;
 
-	@PersistenceContext
-	private EntityManager em;
+	@Autowired
+	private PaieUtils paieUtils;
 
-	PaieUtils pu = new PaieUtils();
-
+	@Transactional
 	@Override
 	public ResultatCalculRemuneration calculer(BulletinSalaire bulletin) {
 		ResultatCalculRemuneration result = new ResultatCalculRemuneration();
-
 		Grade grade = bulletin.getRemunerationEmploye().getGrade();
 
-		BigDecimal sal = grade.getTauxBase().multiply(grade.getNbHeuresBase());
-		result.setSalaireDeBase(pu.formaterBigDecimal(sal).toString());
+		// SALAIRE_BASE = GRADE.NB_HEURES_BASE * GRADE.TAUX_BASE
+		BigDecimal salaireBase = grade.getNbHeuresBase().multiply(grade.getTauxBase());
 
-		BigDecimal prime = bulletin.getPrimeExceptionnelle();
-		BigDecimal salBrut = sal.add(prime);
-		result.setSalaireBrut(pu.formaterBigDecimal(salBrut).toString());
+		// SALAIRE_BRUT = SALAIRE_BASE + PRIME_EXCEPTIONNELLE
+		BigDecimal salaireBrut = salaireBase.add(bulletin.getPrimeExceptionnelle());
 
-		BigDecimal retenueSal = new BigDecimal("0");
-		ProfilRemuneration profil = bulletin.getRemunerationEmploye().getProfilRemuneration();
-		for (int i = 0; i < profil.getCotisationsNonImposables().size(); i++) {
-			if (profil.getCotisationsNonImposables().get(i).getTauxSalarial() != null) {
-				retenueSal = retenueSal
-						.add(profil.getCotisationsNonImposables().get(i).getTauxSalarial().multiply(salBrut));
-			}
+		BigDecimal totalRetenueSalariale = BigDecimal.ZERO;
+		BigDecimal totalCotisationsPatronales = BigDecimal.ZERO;
+
+		try (Stream<Cotisation> cotisationsNonImposables = bulletin.getRemunerationEmploye().getProfilRemuneration()
+				.getCotisationsNonImposables().stream()) {
+
+			BinaryOperator<BigDecimal> binaryOperator = BigDecimal::add;
+
+			// TOTAL_RETENUE_SALARIALE =
+			// SOMME(COTISATION_NON_IMPOSABLE.TAUX_SALARIAL*SALAIRE_BRUT)
+			totalRetenueSalariale = cotisationsNonImposables.filter(c -> c.getTauxSalarial() != null)
+					.map(c -> c.getTauxSalarial().multiply(salaireBrut)).reduce(binaryOperator).orElse(BigDecimal.ZERO);
 		}
-		result.setTotalRetenueSalarial(pu.formaterBigDecimal(retenueSal).toString());
 
-		BigDecimal cosPal = new BigDecimal("0");
-		for (int i = 0; i < profil.getCotisationsNonImposables().size(); i++) {
-			if (profil.getCotisationsNonImposables().get(i).getTauxPatronal() != null) {
-				cosPal = cosPal.add(profil.getCotisationsNonImposables().get(i).getTauxPatronal().multiply(salBrut));
-			}
+		try (Stream<Cotisation> cotisationsNonImposables = bulletin.getRemunerationEmploye().getProfilRemuneration()
+				.getCotisationsNonImposables().stream()) {
+
+			BinaryOperator<BigDecimal> binaryOperator = BigDecimal::add;
+
+			// TOTAL_COTISATIONS_PATRONALES =
+			// SOMME(COTISATION_NON_IMPOSABLE.TAUX_PATRONAL*SALAIRE_BRUT)
+			totalCotisationsPatronales = cotisationsNonImposables.filter(c -> c.getTauxPatronal() != null)
+					.map(c -> c.getTauxPatronal().multiply(salaireBrut)).reduce(BigDecimal.ZERO, binaryOperator);
 		}
-		result.setTotalCotisationsPatronales(pu.formaterBigDecimal(cosPal).toString());
 
-		BigDecimal netImp = new BigDecimal("0");
-		netImp = salBrut.subtract(retenueSal);
-		result.setNetImposable(netImp.toString());
+		BigDecimal totalCotisationsImposables = BigDecimal.ZERO;
 
-		BigDecimal netPayer = netImp;
-		BigDecimal sommeSansImpot = new BigDecimal("0");
-		for (int i = 0; i < profil.getCotisationsImposables().size(); i++) {
-			if (profil.getCotisationsImposables().get(i).getTauxSalarial() != null) {
-				sommeSansImpot = sommeSansImpot
-						.add(profil.getCotisationsImposables().get(i).getTauxSalarial().multiply(salBrut));
-			}
+		try (Stream<Cotisation> cotisationsImposables = bulletin.getRemunerationEmploye().getProfilRemuneration()
+				.getCotisationsImposables().stream()) {
+
+			totalCotisationsImposables = cotisationsImposables.filter(c -> c.getTauxSalarial() != null)
+					.map(c -> c.getTauxSalarial().multiply(salaireBrut)).reduce(BigDecimal::add)
+					.orElse(BigDecimal.ZERO);
 		}
-		netPayer = netPayer.subtract(sommeSansImpot);
-		result.setNetAPayer(pu.formaterBigDecimal(netPayer).toString());
 
+		result.setSalaireDeBase(paieUtils.formaterBigDecimal(salaireBase));
+		result.setSalaireBrut(paieUtils.formaterBigDecimal(salaireBrut));
+		result.setTotalRetenueSalarial(paieUtils.formaterBigDecimal(totalRetenueSalariale));
+		result.setTotalCotisationsPatronales(paieUtils.formaterBigDecimal(totalCotisationsPatronales));
+
+		// NET_IMPOSABLE = SALAIRE_BRUT - TOTAL_RETENUE_SALARIALE
+		BigDecimal netImposable = new BigDecimal(result.getSalaireBrut())
+				.subtract(new BigDecimal(result.getTotalRetenueSalarial()));
+		result.setNetImposable(paieUtils.formaterBigDecimal(netImposable));
+
+		// NET_A_PAYER = NET_IMPOSABLE -
+		// SOMME(COTISATION_IMPOSABLE.TAUX_SALARIAL*SALAIRE_BRUT)
+		BigDecimal netAPayer = new BigDecimal(result.getNetImposable()).subtract(totalCotisationsImposables);
+
+		result.setNetAPayer(paieUtils.formaterBigDecimal(netAPayer));
 		return result;
 	}
 
@@ -84,18 +99,8 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 
 		List<BulletinSalaire> listBulletins = bulletinRepository.findAll();
 
-		Map<BulletinSalaire, ResultatCalculRemuneration> resultat = new HashMap<>();
-
-		for (BulletinSalaire bulletin : listBulletins) {
-
-			resultat.put(bulletin, calculer(bulletin));
-		}
-
-		/*
-		 * Map<BulletinSalaire, ResultatCalculRemuneration> resultat =
-		 * listBulletins.stream() .collect(Collectors.toMap(Function.identity(),
-		 * b -> calculer(b)));
-		 */
+		Map<BulletinSalaire, ResultatCalculRemuneration> resultat = listBulletins.stream()
+				.collect(Collectors.toMap(Function.identity(), b -> calculer(b)));
 
 		return resultat;
 	}

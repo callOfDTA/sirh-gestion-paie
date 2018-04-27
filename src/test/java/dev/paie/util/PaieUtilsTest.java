@@ -14,7 +14,6 @@ public class PaieUtilsTest {
 	private PaieUtils paieUtils;
 	private ClassPathXmlApplicationContext context;
 
-	
 	@Before
 	public void onSetup() {
 		context = new ClassPathXmlApplicationContext("app-config.xml");

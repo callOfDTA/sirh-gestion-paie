@@ -10,7 +10,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="stylesheet" href='<c:url value="/bootstrap/css/bootstrap.css"/>'>
-	<title>SIRH - Liste des bulletins</title>
+	<title>SIRH - Bulletin salaire</title>
 </head>
 
 <body>
@@ -29,42 +29,205 @@
 
 	<div class="container">
 
-		<h1>Bulletins</h1>
-		
-		<div align="right" class="mr-2 mb-3">
-			<a href="<%=request.getContextPath()%>/mvc/bulletins/creer" class="btn btn-primary" role="button">Créer un nouveau bulletin</a>
+		<h1>Bulletin de salaire</h1>
+
+		<div align="right" class="mt-5 mr-2">
+			<h5 class="card-title">Période</h5>
+			<p class="card-text">Du ${bulletin.periode.dateDebut} au ${bulletin.periode.dateFin}</p>
+			
 		</div>
-		
+
+		<div class="mt-5" style="width: 60rem;">
+			<div class="card-body form-group row">
+				<div class="col">
+					<h5 class="card-title">Entreprise</h5>
+					<div>
+						<p class="card-text">${bulletin.remunerationEmploye.entreprise.denomination}</p>
+						<p class="card-text">Siret : ${bulletin.remunerationEmploye.entreprise.siret}</p>
+					</div>			
+					<p align="right" class="card-text mr-4"><strong>Matricule ${bulletin.remunerationEmploye.matricule}</strong></p>
+				</div>
+						
+			</div>
+		</div>
+
 		<div class="table-responsive mt-5">
+			<h5><strong>Salaire</strong></h5>
   			<table class="table">
 				<thead>
 					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Date/Heure de création</th>
-						<th scope="col">Période</th>
-						<th scope="col">Matricule</th>
-						<th scope="col">Salaire brut</th>
-						<th scope="col">Net Imposable</th>
-						<th scope="col">Net A Payer</th>
-						<th scope="col">Actions</th>
+						<th scope="col">Rubrique</th>
+						<th scope="col">Base</th>
+						<th scope="col">Taux Salarial</th>
+						<th scope="col">Montant Salarial</th>
+						<th scope="col">Taux patronal</th>
+						<th scope="col">Cot. patronales</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${result}" var="r">
-						<tr>
-							<th scope="row">${r.key.id}</th>
-							<td>${r.key.heureCreation}</td>
-							<td>${r.key.periode.dateDebut}- ${r.key.periode.dateFin}</td>
-							<td>${r.key.remunerationEmploye.matricule}</td>
-							<td>${r.value.salaireBrut}€</td>
-							<td>${r.value.netImposable}€</td>
-							<td>${r.value.netAPayer}€</td>
-							<td></td>
-						</tr>
-					</c:forEach>
+					<tr>
+						<td>Salaire de base</td>
+						<td>${bulletin.remunerationEmploye.grade.nbHeuresBase}h</td>
+						<td>${bulletin.remunerationEmploye.grade.tauxBase}</td>
+						<td>${calcul.salaireDeBase} €</td>
+						<td></td>
+						<td></td>
+						<td></td>				
+					</tr>
+					<tr>
+						<td>Prime Except.</td>
+						<td></td>
+						<td></td>
+						<td>${bulletin.primeExceptionnelle} €</td>
+						<td></td>
+						<td></td>
+						<td></td>	
+						<td></td>	
+					</tr>
+					<tr>
+						<td> </td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>	
+					</tr>
+					<tr>
+						<td>Salaire Brut</td>
+						<td></td>
+						<td></td>
+						<td>${calcul.salaireBrut} €</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>	
+					</tr>
 				</tbody>
 			</table>
 		</div>
+		
+		
+		<div class="table-responsive mt-5">
+			<h5><strong>Cotisations</strong></h5>
+  			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Rubrique</th>
+						<th scope="col">Base</th>
+						<th scope="col">Taux Salarial</th>
+						<th scope="col">Montant Salarial</th>
+						<th scope="col">Taux patronal</th>
+						<th scope="col">Cot. patronales</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>				
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>	
+						<td></td>	
+					</tr>
+					<tr>
+						<td> </td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>	
+					</tr>
+					<tr>
+						<td>Total Retenue</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>	
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		
+		<div class="table-responsive mt-5">
+			<h5><strong>NET Imposable :</strong></h5>
+  			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Rubrique</th>
+						<th scope="col">Base</th>
+						<th scope="col">Taux Salarial</th>
+						<th scope="col">Montant Salarial</th>
+						<th scope="col">Taux patronal</th>
+						<th scope="col">Cot. patronales</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>				
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>	
+						<td></td>	
+					</tr>
+					<tr>
+						<td> </td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>	
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>	
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div align="right" class="mr-2 mb-3">
+			<p><strong>NET A PAYER</strong></p>
+		</div>
+		
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

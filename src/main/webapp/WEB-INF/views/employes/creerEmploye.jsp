@@ -14,9 +14,6 @@
   	</head>
   	
   	<body>
-    	<h1>Créer Employe</h1>
-		<p>Préfixe Matricule : ${prefixMatricule}</p>
-
     	<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
           	<div>
             	<li class="nav-item">
@@ -31,7 +28,9 @@
       	</ul>
       	
       	<div class="container">
-      		<form:form method="post" modelAttribute="RemunerationEmploye" style="width: 35rem">
+      		<h1>Créer Employe</h1>
+      	
+      		<form:form class="mt-5" method="post" modelAttribute="RemunerationEmploye" style="width: 35rem">
 	    		<div class="form-group row">
 	        		<label for="matricule" class="col-sm-4">Matricule</label>
 	        		<div class="col-sm-8">
