@@ -19,8 +19,8 @@ public class ListerEmployesController {
 	public ModelAndView listeEmployes() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("employes/listeEmployes");
-		mv.addObject("dateCreation", "01/01/2018");
-		mv.addObject("matricule", "M001");
+		// mv.addObject("dateCreation", "01/01/2018");
+		// mv.addObject("matricule", "M001");
 		mv.addObject("employes", empRepo.findAll());
 		return mv;
 	}
