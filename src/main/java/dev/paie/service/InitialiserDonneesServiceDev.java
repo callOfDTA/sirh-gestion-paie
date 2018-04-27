@@ -1,5 +1,6 @@
 package dev.paie.service;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -52,10 +53,12 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 		employe1.setMatricule("A01");
 		Grade grade1 = idGrade.get("grade1");
 		employe1.setGrade(grade1);
+		employe1.setDateCreation(LocalDateTime.now());
 		em.persist(employe1);
 		RemunerationEmploye employe2 = new RemunerationEmploye();
 		employe2.setMatricule("A02");
 		employe2.setGrade(idGrade.get("grade2"));
+		employe2.setDateCreation(LocalDateTime.now());
 		em.persist(employe2);
 		ctx.close();
 	}

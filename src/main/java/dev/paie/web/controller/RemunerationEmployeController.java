@@ -8,10 +8,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/employes")
 public class RemunerationEmployeController {
-	@RequestMapping(method = RequestMethod.GET, path = "/creer")
+	@RequestMapping(method = RequestMethod.GET, path = "/creerBis")
 	public ModelAndView creerEmploye() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("employes/creerEmploye");
+		mv.setViewName("employes/creerEmployeBis");
 		mv.addObject("prefixMatricule", "M00");
 		return mv;
 	}

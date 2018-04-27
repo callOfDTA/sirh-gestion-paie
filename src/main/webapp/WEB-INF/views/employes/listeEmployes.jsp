@@ -16,7 +16,7 @@
 </tr>
 <c:forEach items="${employes}" var="e">
 	<tr>
-		<td>?</td>
+		<td>${e.dateCreation}</td>
 		<td>${e.matricule}</td>
 		<td>${e.grade.code}</td>
 	</tr>
