@@ -10,8 +10,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+
+@NamedEntityGraph(name = "BulletinSalaire.AvecCotisations", attributeNodes = {
+		@NamedAttributeNode(value = "remunerationEmploye", subgraph = "RemunerationEmploye.AvecCotisations") }, subgraphs = {
+				@NamedSubgraph(name = "RemunerationEmploye.AvecCotisations", attributeNodes = {
+						@NamedAttributeNode(value = "profilRemuneration", subgraph = "ProfilRemuneration.AvecCotisations") }),
+				@NamedSubgraph(name = "ProfilRemuneration.AvecCotisations", attributeNodes = {
+						@NamedAttributeNode(value = "cotisationsNonImposables"),
+						@NamedAttributeNode(value = "cotisationsImposables") }) })
 
 @Entity
 @Table(name = "BULLETIN_SALAIRE")

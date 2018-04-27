@@ -3,6 +3,7 @@ package dev.paie.service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dev.paie.entite.BulletinSalaire;
+import dev.paie.entite.Cotisation;
+import dev.paie.entite.Grade;
+import dev.paie.entite.ProfilRemuneration;
 import dev.paie.entite.ResultatCalculRemuneration;
 import dev.paie.repository.BulletinRepository;
 import dev.paie.util.PaieUtils;
@@ -24,58 +28,42 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 
 	@Override
 	public ResultatCalculRemuneration calculer(BulletinSalaire bulletin) {
-		ResultatCalculRemuneration rcr = new ResultatCalculRemuneration();
+		PaieUtils pu = new PaieUtils();
 
-		BigDecimal salairedebase = bulletin.getRemunerationEmploye().getGrade().getNbHeuresBase()
-				.multiply(bulletin.getRemunerationEmploye().getGrade().getTauxBase());
+		ResultatCalculRemuneration res = new ResultatCalculRemuneration();
+		Grade grade = bulletin.getRemunerationEmploye().getGrade();
+		ProfilRemuneration profil = bulletin.getRemunerationEmploye().getProfilRemuneration();
 
-		rcr.setSalaireDeBase(pu.formaterBigDecimal(salairedebase).toString());
+		BigDecimal salaireDeBase = (grade.getNbHeuresBase().multiply(grade.getTauxBase()));
+		BigDecimal salaireBrut = (salaireDeBase.add(bulletin.getPrimeExceptionnelle()));
 
-		BigDecimal salaireBrut = salairedebase.add(bulletin.getPrimeExceptionnelle());
-		rcr.setSalaireBrut(pu.formaterBigDecimal(salaireBrut).toString());
+		ToDoubleFunction<Cotisation> func1 = c -> (c.getTauxSalarial().multiply(salaireBrut).doubleValue());
+		ToDoubleFunction<Cotisation> func2 = c -> (c.getTauxPatronal().multiply(salaireBrut).doubleValue());
 
-		BigDecimal totalretenuesalarial = new BigDecimal("0");
-		Source: http: // godiche.ru/ordinateurs-et-logiciels/programmation/java/9962-comment-faire-de-l-arithmtique-bigdecimal-pour.html;
-		for (int i = 0; i < bulletin.getRemunerationEmploye().getProfilRemuneration().getCotisationsNonImposables()
-				.size(); i++) {
-			if (bulletin.getRemunerationEmploye().getProfilRemuneration().getCotisationsNonImposables().get(i)
-					.getTauxSalarial() != null) {
-				totalretenuesalarial = totalretenuesalarial
-						.add(bulletin.getRemunerationEmploye().getProfilRemuneration().getCotisationsNonImposables()
-								.get(i).getTauxSalarial().multiply(salaireBrut));
-			}
+		BigDecimal totalRetenue = BigDecimal
+				.valueOf(profil.getCotisationsNonImposables().stream().mapToDouble(func1).sum());
+		BigDecimal totalCotisation = BigDecimal
+				.valueOf(profil.getCotisationsNonImposables().stream().mapToDouble(func2).sum());
 
-		}
-		rcr.setTotalRetenueSalarial(pu.formaterBigDecimal(totalretenuesalarial).toString());
+		res.setSalaireBrut(pu.formaterBigDecimal(salaireBrut));
+		res.setSalaireDeBase(pu.formaterBigDecimal(salaireDeBase));
+		res.setTotalCotisationsPatronales(pu.formaterBigDecimal(totalCotisation));
+		res.setTotalRetenueSalarial(pu.formaterBigDecimal(totalRetenue));
 
-		BigDecimal totalretenuepatronal = new BigDecimal("0");
-		for (int i = 0; i < bulletin.getRemunerationEmploye().getProfilRemuneration().getCotisationsNonImposables()
-				.size(); i++) {
-			if (bulletin.getRemunerationEmploye().getProfilRemuneration().getCotisationsNonImposables().get(i)
-					.getTauxPatronal() != null) {
-				totalretenuepatronal = totalretenuepatronal
-						.add(bulletin.getRemunerationEmploye().getProfilRemuneration().getCotisationsNonImposables()
-								.get(i).getTauxPatronal().multiply(salaireBrut));
-			}
-		}
-		rcr.setTotalCotisationsPatronales(pu.formaterBigDecimal(totalretenuepatronal).toString());
+		ToDoubleFunction<Cotisation> func3 = c -> (c.getTauxSalarial().multiply(new BigDecimal(res.getSalaireBrut()))
+				.doubleValue());
 
-		BigDecimal netimpossable = salaireBrut.subtract(totalretenuesalarial);
-		rcr.setNetImposable(pu.formaterBigDecimal(netimpossable).toString());
+		BigDecimal netImposable = new BigDecimal(res.getSalaireBrut())
+				.subtract(new BigDecimal(res.getTotalRetenueSalarial()));
 
-		BigDecimal netapayer = netimpossable;
-		BigDecimal cotimpo = new BigDecimal("0");
-		for (int i = 0; i < bulletin.getRemunerationEmploye().getProfilRemuneration().getCotisationsImposables()
-				.size(); i++) {
-			if (bulletin.getRemunerationEmploye().getProfilRemuneration().getCotisationsImposables().get(i)
-					.getTauxSalarial() != null) {
-				cotimpo = cotimpo.add(bulletin.getRemunerationEmploye().getProfilRemuneration()
-						.getCotisationsImposables().get(i).getTauxSalarial().multiply(salaireBrut));
-			}
-		}
-		netapayer = netapayer.subtract(cotimpo);
-		rcr.setNetAPayer(pu.formaterBigDecimal(netapayer).toString());
-		return rcr;
+		res.setNetImposable(pu.formaterBigDecimal(netImposable));
+
+		BigDecimal netAPayer = new BigDecimal(res.getNetImposable())
+				.subtract(BigDecimal.valueOf(profil.getCotisationsImposables().stream().mapToDouble(func3).sum()));
+
+		res.setNetAPayer(pu.formaterBigDecimal(netAPayer));
+
+		return res;
 	}
 
 	@Override

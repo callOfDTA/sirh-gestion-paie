@@ -28,7 +28,7 @@
 					href="<%=request.getContextPath()%>/mvc/employes/lister/">Employe
 						<span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item active"><a class="nav-link" href="<%=request.getContextPath()%>/mvc/bulletin/lister/">Bulletin
+				<li class="nav-item active"><a class="nav-link" href="<%=request.getContextPath()%>/mvc/bulletin/bulletin/">Bulletin
 						<span class="sr-only">(current)</span>
 				</a></li>
 			</ul>
@@ -41,7 +41,6 @@
 		<a href="<%=request.getContextPath()%>/mvc/bulletin/creer/"
 			class="btn btn-primary">Ajouter un nouveau bulletin</a>
 	</div>
-
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -65,11 +64,10 @@
 				<td>${r.value.salaireBrut}€</td>
 				<td>${r.value.netImposable}€</td>
 				<td>${r.value.netAPayer}€</td>
-				<td><a class="nav-link" href="<%=request.getContextPath()%>/mvc/bulletin/lister/">Visualiser
+				<td><a class="nav-link" href="<%=request.getContextPath()%>/mvc/bulletin/bulletin?ID=${r.key.id}">Visualiser
 						<span class="sr-only">(current)</span>
 				</a></td>
-			</tr>
-			
+			</tr>		
 			</c:forEach>
 		</tbody>
 	</table>
