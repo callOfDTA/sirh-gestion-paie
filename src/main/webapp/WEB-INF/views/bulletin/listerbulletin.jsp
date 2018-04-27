@@ -35,48 +35,44 @@
 		</div>
 	</nav>
 
-	<h1 align="center">Ajouter un employé</h1>
+	<h1 align="center">Lister les bulletins de salaire</h1>
 
-	<form method="post">
-		<div class="form-group ">
-			<label class="col-3" for="Matricule : ">Matricule</label> <input
-				class="col-3" type="text" id="Matricule"
-				aria-describedby="Matricule" name="Matricule"
-				placeholder="Entrer Matricule">
-		</div>
-		<div class="form-group row ml-0">
-			<label class="col-3" for="entreprise : ">entreprise</label> <select
-				class="form-control col-3" id="selectEntreprise"
-				name="entrepriseParam">
-				<c:forEach items="${ entreprise }" var="e">
-					<option value="${e.id}">${e.siret}</option>
-				</c:forEach>
-			</select>
-		</div>
-		<div class="form-group row ml-0">
-			<label class="col-3" for="profil : ">profil</label> <select
-				class="form-control col-3" id="selectProfil" name="profilParam">
-				<c:forEach items="${ profil }" var="p">
-					<option value="${p.id}">${p.code}</option>
-				</c:forEach>
-			</select>
-		</div>
-		<div class="form-group row ml-0">
-			<label class="col-3" for="grades : ">grades</label> <select
-				class="form-control col-3" id="selectGrade" name="gradeParam">
-				<c:forEach items="${ grade }" var="g">
-					<option value="${g.id}">${g.code}-
-						<fmt:formatNumber pattern="#,##0"
-							value="${g.tauxBase*g.nbHeuresBase*12}"></fmt:formatNumber> € /
-						an
-					</option>
-				</c:forEach>
-			</select>
-		</div>
-		<div class="form-group">
-			<button type="submit" class="btn btn-primary">Ajouter</button>
-		</div>
-	</form>
+	<div align="right" class="mb-2">
+		<a href="<%=request.getContextPath()%>/mvc/bulletin/creer/"
+			class="btn btn-primary">Ajouter un nouveau bulletin</a>
+	</div>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Date/heure création</th>
+				<th scope="col">Période</th>
+				<th scope="col">Matricule</th>
+				<th scope="col">Salaire brut</th>
+				<th scope="col">Net imposable</th>
+				<th scope="col">Net A Payer</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${ result }" var="r">
+			<tr>
+				<th scope="row">${r.key.id}</th>
+				<td>${r.key.datecreation}</td>
+				<td>${r.key.periode.dateDebut}/${r.key.periode.dateFin}</td>
+				<td>${r.key.remunerationEmploye.matricule}</td>
+				<td>${r.value.salaireBrut}€</td>
+				<td>${r.value.netImposable}€</td>
+				<td>${r.value.netAPayer}€</td>
+				<td><a class="nav-link" href="<%=request.getContextPath()%>/mvc/bulletin/lister/">Visualiser
+						<span class="sr-only">(current)</span>
+				</a></td>
+			</tr>
+			
+			</c:forEach>
+		</tbody>
+	</table>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>

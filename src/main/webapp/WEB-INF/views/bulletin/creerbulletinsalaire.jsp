@@ -28,50 +28,41 @@
 					href="<%=request.getContextPath()%>/mvc/employes/lister/">Employe
 						<span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item active"><a class="nav-link" href="<%=request.getContextPath()%>/mvc/bulletin/lister/">Bulletin
+				<li class="nav-item active"><a class="nav-link"
+					href="<%=request.getContextPath()%>/mvc/bulletin/lister/">Bulletin
 						<span class="sr-only">(current)</span>
 				</a></li>
 			</ul>
 		</div>
 	</nav>
 
-	<h1 align="center">Ajouter un employé</h1>
+	<h1 align="center">Ajouter un Bulletin de salaire</h1>
 
 	<form method="post">
-		<div class="form-group ">
-			<label class="col-3" for="Matricule : ">Matricule</label> <input
-				class="col-3" type="text" id="Matricule"
-				aria-describedby="Matricule" name="Matricule"
-				placeholder="Entrer Matricule">
-		</div>
+
 		<div class="form-group row ml-0">
-			<label class="col-3" for="entreprise : ">entreprise</label> <select
-				class="form-control col-3" id="selectEntreprise"
-				name="entrepriseParam">
-				<c:forEach items="${ entreprise }" var="e">
-					<option value="${e.id}">${e.siret}</option>
+			<label class="col-3" for="Période : ">Période</label> <select
+				class="form-control col-5" id="selectperiode"
+				name="periodeParam">
+				<c:forEach items="${ periode }" var="p">
+					<option value="${p.id}">${p.dateDebut}/${p.dateFin}</option>
 				</c:forEach>
 			</select>
 		</div>
 		<div class="form-group row ml-0">
-			<label class="col-3" for="profil : ">profil</label> <select
-				class="form-control col-3" id="selectProfil" name="profilParam">
-				<c:forEach items="${ profil }" var="p">
-					<option value="${p.id}">${p.code}</option>
+			<label class="col-3" for="Matricule : ">Matricule</label> <select
+				class="form-control col-5" id="selectmatricule"
+				name="matriculeParam">
+				<c:forEach items="${ employes }" var="e">
+					<option value="${e.id}">${e.matricule}</option>
 				</c:forEach>
 			</select>
-		</div>
-		<div class="form-group row ml-0">
-			<label class="col-3" for="grades : ">grades</label> <select
-				class="form-control col-3" id="selectGrade" name="gradeParam">
-				<c:forEach items="${ grade }" var="g">
-					<option value="${g.id}">${g.code}-
-						<fmt:formatNumber pattern="#,##0"
-							value="${g.tauxBase*g.nbHeuresBase*12}"></fmt:formatNumber> € /
-						an
-					</option>
-				</c:forEach>
-			</select>
+			</div>
+			<div class="form-group ">
+			<label class="col-3" for="Primeexeptionnel : ">Prime exeptionnel</label> <input
+				class="col-5" type="text" id="Primeexeptionnel"
+				aria-describedby="Primeexeptionnel" name="Primeexeptionnel"
+				placeholder="Entrer Prime exeptionnel (ex: 1000)">
 		</div>
 		<div class="form-group">
 			<button type="submit" class="btn btn-primary">Ajouter</button>
