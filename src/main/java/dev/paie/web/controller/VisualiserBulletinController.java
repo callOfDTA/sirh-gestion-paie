@@ -15,17 +15,17 @@ import dev.paie.service.CalculerRemunerationService;
 
 @Controller
 @RequestMapping("/bulletins")
-public class ListerBulletinController {
+public class VisualiserBulletinController {
 	@Autowired
 	BulletinSalaireRepository bulletinRepository;
 
 	@Autowired
 	CalculerRemunerationService calcul;
 
-	@RequestMapping(method = RequestMethod.GET, path = "/lister")
+	@RequestMapping(method = RequestMethod.GET, path = "/visualiser")
 	public ModelAndView listerEmployeGet() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("bulletins/listerBulletin");
+		mv.setViewName("bulletins/bulletin");
 
 		Map<BulletinSalaire, ResultatCalculRemuneration> listBulletins = calcul.calculerTousLesBulletins();
 		mv.addObject("result", listBulletins);

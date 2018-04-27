@@ -11,7 +11,6 @@ import dev.paie.entite.BulletinSalaire;
 import dev.paie.repository.BulletinSalaireRepository;
 import dev.paie.repository.PeriodeRepository;
 import dev.paie.repository.RemunerationEmployeRepository;
-import dev.paie.service.CalculerRemunerationService;
 
 @Controller
 @RequestMapping("/bulletins")
@@ -24,9 +23,6 @@ public class CreerBulletinController {
 
 	@Autowired
 	private RemunerationEmployeRepository employeRepository;
-
-	@Autowired
-	private CalculerRemunerationService remunerationService;
 
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
 	public ModelAndView creerBulletinGet() {

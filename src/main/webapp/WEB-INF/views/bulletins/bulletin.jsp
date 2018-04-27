@@ -59,9 +59,7 @@
 							<td>${r.value.salaireBrut}€</td>
 							<td>${r.value.netImposable}€</td>
 							<td>${r.value.netAPayer}€</td>
-							<td>
-								<a class="nav-link" href="<%=request.getContextPath()%>/mvc/bulletins/visualiser">Visualiser</a>
-							</td>
+							<td></td>
 						</tr>
 					</c:forEach>
 				</tbody>
