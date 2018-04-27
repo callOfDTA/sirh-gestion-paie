@@ -22,17 +22,30 @@ import org.springframework.test.context.junit4.SpringRunner;
 import dev.paie.entite.Grade;
 import dev.paie.config.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class GradeServiceJdbcTemplateTest.
+ */
 //Sélection des classes de configuration Spring à utiliser lors du test
 @ContextConfiguration(classes = { GradeServiceJdbcTemplate.class, DataSourceMySQLConfig.class })
 // Configuration JUnit pour que Spring prenne la main sur le cycle de vie du
 // test
 @RunWith(SpringRunner.class)
 public class GradeServiceJdbcTemplateTest {
+	
+	/** The grade service. */
 	@Autowired
 	private GradeService gradeService;
 
+	/** The grades. */
 	private List<Grade> grades;
+	
+	/** The g 1. */
 	private Grade g1 = new Grade();
+	
+	/**
+	 * Test sauvegarder lister mettre a jour.
+	 */
 	@Test
 	public void test_sauvegarder_lister_mettre_a_jour() {
 

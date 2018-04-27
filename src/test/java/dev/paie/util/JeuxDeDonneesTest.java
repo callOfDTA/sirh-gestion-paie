@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.junit.After;
@@ -16,27 +16,46 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import dev.paie.entite.BulletinSalaire;
 import dev.paie.entite.Cotisation;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class JeuxDeDonneesTest.
+ */
 public class JeuxDeDonneesTest {
 
+	/** The context. */
 	private ClassPathXmlApplicationContext context;
+	
+	/** The bulletin 1. */
 	private BulletinSalaire bulletin1;
 
+	/**
+	 * On setup.
+	 */
 	@Before
 	public void onSetup() {
 		context = new ClassPathXmlApplicationContext("jdd-config.xml");
 		bulletin1 = context.getBean("bulletin1", BulletinSalaire.class);
 	}
 
+	/**
+	 * Test prime exceptionnelle.
+	 */
 	@Test
 	public void test_primeExceptionnelle() {
 		assertThat(bulletin1.getPrimeExceptionnelle(), equalTo(new BigDecimal("1000")));
 	}
 
+	/**
+	 * Test employe.
+	 */
 	@Test
 	public void test_employe() {
 		assertThat(bulletin1.getRemunerationEmploye().getMatricule(), equalTo("M01"));
 	}
 
+	/**
+	 * Test entreprise.
+	 */
 	@Test
 	public void test_entreprise() {
 		assertThat(bulletin1.getRemunerationEmploye().getEntreprise().getSiret(), equalTo("80966785000022"));
@@ -44,9 +63,12 @@ public class JeuxDeDonneesTest {
 		assertThat(bulletin1.getRemunerationEmploye().getEntreprise().getCodeNaf(), equalTo("6202A"));
 	}
 
+	/**
+	 * Test cotisations non imposables.
+	 */
 	@Test
 	public void test_cotisationsNonImposables() {
-		List<Cotisation> cotisationsNonImposables = bulletin1.getRemunerationEmploye().getProfilRemuneration()
+		Set<Cotisation> cotisationsNonImposables = bulletin1.getRemunerationEmploye().getProfilRemuneration()
 				.getCotisationsNonImposables();
 		Stream.of("EP01", "EP02", "EP03", "EP04", "EP05", "EP06", "EP07", "EP12", "EP19", "EP20", "EPR1", "E900",
 				"EP28", "EP37")
@@ -54,20 +76,29 @@ public class JeuxDeDonneesTest {
 						cotisationsNonImposables.stream().filter(c -> c.getCode().equals(code)).findAny().isPresent()));
 	}
 
+	/**
+	 * Test cotisation imposables.
+	 */
 	@Test
 	public void test_cotisationImposables() {
-		List<Cotisation> cotisationsImposables = bulletin1.getRemunerationEmploye().getProfilRemuneration()
+		Set<Cotisation> cotisationsImposables = bulletin1.getRemunerationEmploye().getProfilRemuneration()
 				.getCotisationsImposables();
 		Stream.of("SP01", "SP02").forEach(code -> assertTrue("verification code " + code,
 				cotisationsImposables.stream().filter(c -> c.getCode().equals(code)).findAny().isPresent()));
 	}
 
+	/**
+	 * Test grade.
+	 */
 	@Test
 	public void test_grade() {
 		assertThat(bulletin1.getRemunerationEmploye().getGrade().getNbHeuresBase(), equalTo(new BigDecimal("151.67")));
 		assertThat(bulletin1.getRemunerationEmploye().getGrade().getTauxBase(), equalTo(new BigDecimal("11.0984")));
 	}
 
+	/**
+	 * On exit.
+	 */
 	@After
 	public void onExit() {
 		context.close();

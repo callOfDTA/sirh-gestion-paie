@@ -8,6 +8,10 @@ import java.util.Locale;
 
 import org.springframework.stereotype.Component;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class PaieUtils.
+ */
 @Component
 public class PaieUtils {
 

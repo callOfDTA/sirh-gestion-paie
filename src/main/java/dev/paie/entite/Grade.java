@@ -9,51 +9,103 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Grade.
+ */
 @Entity
 @Table(name = "GRADE")
 public class Grade {
 
+	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	/** The code. */
 	@Column(name = "CODE", nullable = false, unique = true)
 	private String code;
 
+	/** The nb heures base. */
 	@Column(name = "NB_HEURE_BASE")
 	private BigDecimal nbHeuresBase;
 
+	/** The taux base. */
 	@Column(name = "TAUX")
 	private BigDecimal tauxBase;
 
+	/**
+	 * Gets the code.
+	 *
+	 * @return the code
+	 */
 	public String getCode() {
 		return code;
 	}
 
+	/**
+	 * Sets the code.
+	 *
+	 * @param code
+	 *            the new code
+	 */
 	public void setCode(String code) {
 		this.code = code;
 	}
 
+	/**
+	 * Gets the nb heures base.
+	 *
+	 * @return the nb heures base
+	 */
 	public BigDecimal getNbHeuresBase() {
 		return nbHeuresBase;
 	}
 
+	/**
+	 * Sets the nb heures base.
+	 *
+	 * @param nbHeuresBase
+	 *            the new nb heures base
+	 */
 	public void setNbHeuresBase(BigDecimal nbHeuresBase) {
 		this.nbHeuresBase = nbHeuresBase;
 	}
 
+	/**
+	 * Gets the taux base.
+	 *
+	 * @return the taux base
+	 */
 	public BigDecimal getTauxBase() {
 		return tauxBase;
 	}
 
+	/**
+	 * Sets the taux base.
+	 *
+	 * @param tauxBase
+	 *            the new taux base
+	 */
 	public void setTauxBase(BigDecimal tauxBase) {
 		this.tauxBase = tauxBase;
 	}
 
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
 	public Integer getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id.
+	 *
+	 * @param id
+	 *            the new id
+	 */
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -68,6 +120,11 @@ public class Grade {
 		return "Grade [id=" + id + ", code=" + code + ", nbHeuresBase=" + nbHeuresBase + ", tauxBase=" + tauxBase + "]";
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object o) {
 		Grade g = (Grade) o;

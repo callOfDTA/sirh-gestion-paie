@@ -11,14 +11,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dev.paie.entite.Cotisation;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CotisationServiceJpa.
+ */
 @Service
 public class CotisationServiceJpa implements CotisationService {
 	
 	
+	/** The em. */
 	@PersistenceContext
 	private EntityManager em;
 	// TODO
 
+	/* (non-Javadoc)
+	 * @see dev.paie.service.CotisationService#sauvegarder(dev.paie.entite.Cotisation)
+	 */
 	@Override
 	@Transactional
 	public void sauvegarder(Cotisation nouvelleCotisation) {
@@ -26,11 +34,14 @@ public class CotisationServiceJpa implements CotisationService {
 	}
 
 	/**
-	 * 
+	 * Instantiates a new cotisation service jpa.
 	 */
 	public CotisationServiceJpa() {
 	}
 
+	/* (non-Javadoc)
+	 * @see dev.paie.service.CotisationService#mettreAJour(dev.paie.entite.Cotisation)
+	 */
 	@Override
 	@Transactional
 	public void mettreAJour(Cotisation cotisation) {
@@ -46,6 +57,9 @@ public class CotisationServiceJpa implements CotisationService {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see dev.paie.service.CotisationService#lister()
+	 */
 	@Override
 	public List<Cotisation> lister() {
 		List<Cotisation> listCotisation = null;

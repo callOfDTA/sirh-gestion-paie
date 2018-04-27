@@ -16,19 +16,30 @@ import dev.paie.config.DataSourceMySQLConfig;
 import dev.paie.config.JpaConfig;
 import dev.paie.entite.Cotisation;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CotisationServiceJpaTest.
+ */
 //Sélection des classes de configuration Spring à utiliser lors du test
 @ContextConfiguration(classes = { JpaConfig.class, DataSourceMySQLConfig.class, CotisationServiceJpa.class })
 // Configuration JUnit pour que Spring prenne la main sur le cycle de vie du
 // test
 @RunWith(SpringRunner.class)
 public class CotisationServiceJpaTest {
+	
+	/** The cotisation service. */
 	@Autowired
 	private CotisationService cotisationService;
 
+	/** The cotisations. */
 	private List<Cotisation> cotisations;
 
+	/** The cot. */
 	private Cotisation cot;
 
+	/**
+	 * Test sauvegarder lister mettre a jour.
+	 */
 	@Test
 	public void test_sauvegarder_lister_mettre_a_jour() {
 

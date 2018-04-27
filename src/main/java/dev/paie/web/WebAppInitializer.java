@@ -11,7 +11,15 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 import dev.paie.config.WebAppConfig;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class WebAppInitializer.
+ */
 public class WebAppInitializer implements WebApplicationInitializer {
+	
+	/* (non-Javadoc)
+	 * @see org.springframework.web.WebApplicationInitializer#onStartup(javax.servlet.ServletContext)
+	 */
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		// Initialisation du contexte Spring

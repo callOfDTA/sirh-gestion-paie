@@ -17,6 +17,10 @@ import dev.paie.config.ServicesConfig;
 import dev.paie.entite.BulletinSalaire;
 import dev.paie.entite.ResultatCalculRemuneration;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CalculerRemunerationServiceSimpleTest.
+ */
 //Sélection des classes de configuration Spring à utiliser lors du test
 @ContextConfiguration(classes = { ServicesConfig.class, JeuxDeDonneesConfig.class })
 // Configuration JUnit pour que Spring prenne la main sur le cycle de vie du
@@ -24,12 +28,17 @@ import dev.paie.entite.ResultatCalculRemuneration;
 @RunWith(SpringRunner.class)
 public class CalculerRemunerationServiceSimpleTest {
 	
+	/** The bulletin 1. */
 	@Autowired
 	private BulletinSalaire bulletin1;
 	
+	/** The remuneration service. */
 	@Autowired
 	private CalculerRemunerationService remunerationService;
 
+	/**
+	 * Test calculer.
+	 */
 	@Test
 	public void test_calculer() {
 		// TODO remplacer null par un objet bulletin

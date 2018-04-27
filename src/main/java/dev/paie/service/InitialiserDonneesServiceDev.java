@@ -19,12 +19,20 @@ import dev.paie.entite.Grade;
 import dev.paie.entite.Periode;
 import dev.paie.entite.ProfilRemuneration;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class InitialiserDonneesServiceDev.
+ */
 @Service
 public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 
+	/** The em. */
 	@PersistenceContext
 	private EntityManager em;
 
+	/* (non-Javadoc)
+	 * @see dev.paie.service.InitialiserDonneesService#initialiser()
+	 */
 	@Override
 	@Transactional
 	public void initialiser() {
@@ -38,6 +46,9 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 		initPeriod();
 	}
 
+	/**
+	 * Inits the period.
+	 */
 	@Transactional
 	public void initPeriod() {
 		List<Periode> lPeriode = new ArrayList<>();

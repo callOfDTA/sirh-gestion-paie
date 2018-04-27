@@ -24,8 +24,8 @@
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item"><a class="nav-link" href="#">Employés </a></li>
-			<li class="nav-item"><a class="nav-link" href="#">Bulletins</a>
+			<li class="nav-item"><a class="nav-link" href='<c:url value="/mvc/employes/lister"/>'>Employés </a></li>
+			<li class="nav-item"><a class="nav-link" href='<c:url value="/mvc/bulletins/lister"/>'>Bulletins</a>
 			</li>
 		</ul>
 	</div>

@@ -13,15 +13,25 @@ import org.springframework.test.context.junit4.SpringRunner;
 import dev.paie.config.ServicesConfig;
 import dev.paie.entite.Avantage;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AvantageRepositoryTest.
+ */
 @ContextConfiguration(classes = { ServicesConfig.class })
 // TODO compléter la configuration
 @RunWith(SpringRunner.class)
 public class AvantageRepositoryTest {
+	
+	/** The avantage repository. */
 	@Autowired
 	private AvantageRepository avantageRepository;
 
+	/** The av. */
 	private Avantage av;
 
+	/**
+	 * Test sauvegarder lister mettre a jour.
+	 */
 	@Test
 	public void test_sauvegarder_lister_mettre_a_jour() {
 
