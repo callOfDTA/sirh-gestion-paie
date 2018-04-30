@@ -1,20 +1,33 @@
 package dev.paie.service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.BinaryOperator;
 import java.util.stream.Stream;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dev.paie.entite.BulletinSalaire;
 import dev.paie.entite.Cotisation;
 import dev.paie.entite.Grade;
 import dev.paie.entite.ResultatCalculRemuneration;
+import dev.paie.repository.BulletinSalaireRepository;
 import dev.paie.util.PaieUtils;
 
+@Service
 public class CalculerRemunerationServiceCorrection implements CalculerRemunerationService {
+	@Autowired
+	BulletinSalaireRepository bullRepo;
+
 	@Override
 	public ResultatCalculRemuneration calculer(BulletinSalaire bulletin) {
 		ResultatCalculRemuneration remu = new ResultatCalculRemuneration();
 		Grade grade = bulletin.getRemunerationEmploye().getGrade();
+		PaieUtils paieUtils = new PaieUtils();
 
 		// SALAIRE_BASE = GRADE.NB_HEURES_BASE * GRADE.TAUX_BASE
 		BigDecimal salaireBase = grade.getNbHeuresBase().multiply(grade.getTauxBase());
@@ -73,5 +86,16 @@ public class CalculerRemunerationServiceCorrection implements CalculerRemunerati
 
 		remu.setNetAPayer(paieUtils.formaterBigDecimal(netAPayer));
 		return remu;
+	}
+
+	@Override
+	@Transactional
+	public Map<BulletinSalaire, ResultatCalculRemuneration> calculerTousLesBulletins() {
+		Map<BulletinSalaire, ResultatCalculRemuneration> resultat = new HashMap<>();
+		List<BulletinSalaire> bullList = bullRepo.findAll();
+		for (BulletinSalaire bulletin : bullList) {
+			resultat.put(bulletin, calculer(bulletin));
+		}
+		return resultat;
 	}
 }

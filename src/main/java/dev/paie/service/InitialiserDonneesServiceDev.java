@@ -13,11 +13,14 @@ import dev.paie.entite.Entreprise;
 import dev.paie.entite.Grade;
 import dev.paie.entite.Periode;
 import dev.paie.entite.ProfilRemuneration;
+import dev.paie.entite.Utilisateur;
+import dev.paie.entite.Utilisateur.ROLES;
 import dev.paie.repository.CotisationRepository;
 import dev.paie.repository.EntrepriseRepository;
 import dev.paie.repository.GradeRepository;
 import dev.paie.repository.PeriodeRepository;
 import dev.paie.repository.ProfilRemunerationRepository;
+import dev.paie.repository.UtilisateurRepository;
 
 @Service
 public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
@@ -31,6 +34,8 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 	private PeriodeRepository periodeRepository;
 	@Autowired
 	private ProfilRemunerationRepository profRepo;
+	@Autowired
+	private UtilisateurRepository utiRepo;
 
 	@Override
 	public void initialiser() {
@@ -63,6 +68,18 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 				p.setDateFin(LocalDate.of(today.getYear(), i, debut.lengthOfMonth()));
 				periodeRepository.save(p);
 			});
+			Utilisateur admin = new Utilisateur();
+			Utilisateur user1 = new Utilisateur();
+			admin.setNomUtilisateur("admin");
+			admin.setMotDePasse("admin");
+			admin.setEstActif(true);
+			admin.setRole(ROLES.valueOf("ROLE_ADMINISTRATEUR"));
+			user1.setNomUtilisateur("user1");
+			user1.setMotDePasse("user1");
+			user1.setEstActif(true);
+			user1.setRole(ROLES.valueOf("ROLE_UTILISATEUR"));
+			utiRepo.save(admin);
+			utiRepo.save(user1);
 		}
 	}
 

@@ -9,9 +9,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-@EnableWebMvc
-@Import({ ServiceConfig.class })
+
+@Import({ ServiceConfig.class, SecurityConfig.class })
 @ComponentScan("dev.paie.web")
+@EnableWebMvc
 public class WebAppConfig {
 	@Bean
 	public ViewResolver viewResolver() {
