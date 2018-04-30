@@ -52,180 +52,102 @@
 		</div>
 
 		<div class="table-responsive mt-5">
-			<h5><strong>Salaire</strong></h5>
-  			<table class="table">
-				<thead>
+		<h5>
+			<strong>Salaire</strong>
+		</h5>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Rubrique</th>
+					<th scope="col">Base</th>
+					<th scope="col">Taux Salarial</th>
+					<th scope="col">Montant Salarial</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Salaire de Base</td>
+					<td>${bulletin.remunerationEmploye.grade.nbHeuresBase}hr</td>
+
+					<td>${bulletin.remunerationEmploye.grade.tauxBase}%</td>
+					<td>${calcul.salaireDeBase}€</td>
+				</tr>
+				<tr>
+					<td>Prime Exept</td>
+					<td></td>
+					<td></td>
+					<td>${bulletin.primeExceptionnelle}€</td>
+				</tr>
+				<tr>
+					<td>Salaire Brut</td>
+					<td></td>
+					<td></td>
+					<td>${calcul.salaireBrut}€</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<div class="table-responsive mt-5">
+		<h5>
+			<strong>Cotisations</strong>
+		</h5>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Rubrique</th>
+					<th scope="col">Base</th>
+					<th scope="col">Taux Salarial</th>
+					<th scope="col">Montant Salarial</th>
+					<th scope="col">Taux patronal</th>
+					<th scope="col">Cot. patronales</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${ bulletin.remunerationEmploye.profilRemuneration.cotisationsNonImposables }" var="cot">
 					<tr>
-						<th scope="col">Rubrique</th>
-						<th scope="col">Base</th>
-						<th scope="col">Taux Salarial</th>
-						<th scope="col">Montant Salarial</th>
-						<th scope="col">Taux patronal</th>
-						<th scope="col">Cot. patronales</th>
+						<td>${cot.code} ${cot.libelle}</td>
+						<td>${calcul.salaireBrut}€</td>
+						<td>${cot.tauxSalarial}</td>
+						<td>${calcul.salaireBrut * cot.tauxSalarial} €</td>
+						<td>${cot.tauxPatronal}</td>
+						<td>${calcul.salaireBrut * cot.tauxPatronal} €</td>
 					</tr>
-				</thead>
-				<tbody>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+
+
+	<div class="table-responsive mt-5">
+		<h5>
+			<strong>NET Imposable : ${calcul.netImposable}€</strong>
+		</h5>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Rubrique</th>
+					<th scope="col">Base</th>
+					<th scope="col">Taux Salarial</th>
+					<th scope="col">Montant Salarial</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${ bulletin.remunerationEmploye.profilRemuneration.cotisationsImposables }" var="cot">
 					<tr>
-						<td>Salaire de base</td>
-						<td>${bulletin.remunerationEmploye.grade.nbHeuresBase}h</td>
-						<td>${bulletin.remunerationEmploye.grade.tauxBase}</td>
-						<td>${calcul.salaireDeBase} €</td>
-						<td></td>
-						<td></td>
-						<td></td>				
+						<td>${cot.code} ${cot.libelle}</td>
+						<td>${calcul.salaireBrut}€</td>
+						<td>${cot.tauxSalarial}</td>
+						<td>${calcul.salaireBrut * cot.tauxSalarial} €</td>
 					</tr>
-					<tr>
-						<td>Prime Except.</td>
-						<td></td>
-						<td></td>
-						<td>${bulletin.primeExceptionnelle} €</td>
-						<td></td>
-						<td></td>
-						<td></td>	
-						<td></td>	
-					</tr>
-					<tr>
-						<td> </td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>	
-					</tr>
-					<tr>
-						<td>Salaire Brut</td>
-						<td></td>
-						<td></td>
-						<td>${calcul.salaireBrut} €</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>	
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		
-		
-		<div class="table-responsive mt-5">
-			<h5><strong>Cotisations</strong></h5>
-  			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">Rubrique</th>
-						<th scope="col">Base</th>
-						<th scope="col">Taux Salarial</th>
-						<th scope="col">Montant Salarial</th>
-						<th scope="col">Taux patronal</th>
-						<th scope="col">Cot. patronales</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>				
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>	
-						<td></td>	
-					</tr>
-					<tr>
-						<td> </td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>	
-					</tr>
-					<tr>
-						<td>Total Retenue</td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>	
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		
-		
-		<div class="table-responsive mt-5">
-			<h5><strong>NET Imposable :</strong></h5>
-  			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">Rubrique</th>
-						<th scope="col">Base</th>
-						<th scope="col">Taux Salarial</th>
-						<th scope="col">Montant Salarial</th>
-						<th scope="col">Taux patronal</th>
-						<th scope="col">Cot. patronales</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>				
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>	
-						<td></td>	
-					</tr>
-					<tr>
-						<td> </td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>	
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>	
-					</tr>
-				</tbody>
-			</table>
+				</c:forEach>
+			</tbody>
+		</table>
 		</div>
 		
 		<div align="right" class="mr-2 mb-3">
-			<p><strong>NET A PAYER</strong></p>
+			<p><strong>NET A PAYER : ${calcul.netAPayer}€</strong></p>
 		</div>
 		
 	</div>

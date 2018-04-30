@@ -23,10 +23,10 @@ public class Cotisation {
 	private String libelle;
 
 	@Column(name = "TAUX_SALARIAL")
-	private BigDecimal tauxSalarial = BigDecimal.valueOf(0.00);
+	private BigDecimal tauxSalarial;
 
 	@Column(name = "TAUX_PATRONAL")
-	private BigDecimal tauxPatronal = BigDecimal.valueOf(0.00);
+	private BigDecimal tauxPatronal;
 
 	public Cotisation() {
 	}
