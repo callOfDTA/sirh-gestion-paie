@@ -3,6 +3,7 @@ package dev.paie.web.controller;
 import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,15 +22,16 @@ import dev.paie.repository.RemunerationEmployeRepository;
 public class BulletinController {
 
 	@Autowired
-	private PeriodeRepository periodeRepository;
+	private BulletinRepository bulletinRepository;
 
 	@Autowired
 	private RemunerationEmployeRepository remRepository;
 
 	@Autowired
-	private BulletinRepository bulletinRepository;
+	private PeriodeRepository periodeRepository;
 
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
+	@Secured("ROLE_ADMINISTRATEUR")
 	public ModelAndView creerEmployeGet() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bulletin/creerbulletinsalaire");

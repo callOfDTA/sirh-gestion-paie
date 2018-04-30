@@ -3,6 +3,7 @@ package dev.paie.web.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,7 @@ public class ListBulletinController {
 	BulletinRepository bulletinRepository;
 
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")
+	@Secured({ "ROLE_UTILISATEUR", "ROLE_ADMINISTRATEUR" })
 	public ModelAndView creerEmployeGet() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bulletin/listerbulletin");
@@ -33,6 +35,8 @@ public class ListBulletinController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/bulletin")
+
+	@Secured("ROLE_ADMINISTRATEUR")
 	public ModelAndView creerEmployeGetbulletin(@RequestParam("ID") Integer id) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bulletin/bulletinindividuel");
