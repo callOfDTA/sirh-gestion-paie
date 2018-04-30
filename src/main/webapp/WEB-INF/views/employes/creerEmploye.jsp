@@ -11,8 +11,9 @@
 
 </head>
 <body>
+	<a href="<c:url value="/mvc/connexion?logout" />">Logout</a>
 	<a href="lister">Employés</a>
-	<a href="/paie/mvc/bulletins/creer">Bulletins</a>
+	<a href="/paie/mvc/bulletins/lister">Bulletins</a>
 
 
 	<div class="container">

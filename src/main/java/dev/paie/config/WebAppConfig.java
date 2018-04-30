@@ -17,7 +17,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 @Configuration
 @EnableWebMvc
-@Import({ ServicesConfig.class })
+@Import({ ServicesConfig.class, SecurityConfig.class })
 @ComponentScan("dev.paie.web")
 public class WebAppConfig {
 	@Bean

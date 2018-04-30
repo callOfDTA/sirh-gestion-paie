@@ -4,6 +4,7 @@
 package dev.paie.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,7 @@ public class BulletinController {
 	CalculerRemunerationService crss;
 
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
+	@Secured("ROLE_ADMINISTRATEUR")
 	public ModelAndView creerBulletinAffichage() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bulletins/creerBulletin");
@@ -45,6 +47,7 @@ public class BulletinController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/creer")
+	@Secured("ROLE_ADMINISTRATEUR")
 	public ModelAndView creerBulletinSubmit(@ModelAttribute("bulletinForm") BulletinSalaire bulletinPreRempli) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bulletins/creerBulletin");
@@ -64,6 +67,7 @@ public class BulletinController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/visualise")
+	@Secured({ "ROLE_UTILISATEUR", "ROLE_ADMINISTRATEUR" })
 	public ModelAndView visualiseBulletinAffichage(@RequestParam("id") String id) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bulletins/visualiseBulletin");

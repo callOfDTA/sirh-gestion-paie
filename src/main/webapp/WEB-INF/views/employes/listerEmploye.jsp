@@ -2,6 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,14 +11,16 @@
 <title>Lister employés</title>
 </head>
 <body>
-
+	<a href="<c:url value="/mvc/connexion?logout" />">Logout</a>
 	<a href="creer">Employés</a>
-	<a href="/paie/mvc/bulletins/creer">Bulletins</a>
+	<a href="/paie/mvc/bulletins/lister">Bulletins</a>
 
 	<div class="container">
 		<h1>Liste des employés</h1>
 		
+		<sec:authorize access="hasRole('ROLE_ADMINISTRATEUR')">
 		<div><a href="creer">Ajouter un employe</a></div>
+		</sec:authorize>
 		
 		<div class="row">
 			<div class="col-6">Date/heure création</div>

@@ -9,18 +9,23 @@ import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dev.paie.entite.Cotisation;
 import dev.paie.entite.Entreprise;
 import dev.paie.entite.Grade;
 import dev.paie.entite.Periode;
 import dev.paie.entite.ProfilRemuneration;
+import dev.paie.entite.Utilisateur;
+import dev.paie.entite.Utilisateur.ROLES;
 import dev.paie.repository.CotisationRepository;
 import dev.paie.repository.EntrepriseRepository;
 import dev.paie.repository.GradeRepository;
 import dev.paie.repository.PeriodeRepository;
 import dev.paie.repository.ProfilRepository;
+import dev.paie.repository.UtilisateurRepository;
 
 /**
  * @author ETY9
@@ -38,7 +43,12 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 	private PeriodeRepository periodeRepository;
 	@Autowired
 	private ProfilRepository profilRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private UtilisateurRepository utilisateurRepository;
 
+	@Transactional
 	@Override
 	public void initialiser() {
 		try (ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("cotisations-imposables.xml",
@@ -70,6 +80,21 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 				periode.setDateFin(LocalDate.of(today.getYear(), i, debut.lengthOfMonth()));
 				periodeRepository.save(periode);
 			});
+
+			Utilisateur user1 = new Utilisateur();
+			user1.setNomUtilisateur("user1");
+			user1.setMotDePasse(this.passwordEncoder.encode("mdp1"));
+			user1.setRole(ROLES.valueOf("ROLE_ADMINISTRATEUR"));
+			user1.setEstActif(true);
+
+			Utilisateur user2 = new Utilisateur();
+			user2.setNomUtilisateur("user2");
+			user2.setMotDePasse(this.passwordEncoder.encode("mdp2"));
+			user2.setRole(ROLES.valueOf("ROLE_UTILISATEUR"));
+			user2.setEstActif(true);
+
+			utilisateurRepository.save(user1);
+			utilisateurRepository.save(user2);
 		}
 
 	}
