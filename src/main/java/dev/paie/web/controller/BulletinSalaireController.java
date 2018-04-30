@@ -1,6 +1,7 @@
 package dev.paie.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,7 @@ public class BulletinSalaireController {
 	 * @return the model and view
 	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
+	@Secured("ROLE_ADMINISTRATEUR")
 	public ModelAndView creerBulletinGet() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("bulletins/creerBulletin");
@@ -57,10 +59,12 @@ public class BulletinSalaireController {
 	/**
 	 * Creer bulletin post.
 	 *
-	 * @param bulletin the bulletin
+	 * @param bulletin
+	 *            the bulletin
 	 * @return the model and view
 	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/creer")
+	@Secured("ROLE_ADMINISTRATEUR")
 	public ModelAndView creerBulletinPost(@ModelAttribute("bulletin") BulletinSalaire bulletin) {
 		ModelAndView mv = new ModelAndView();
 		bulletinRepo.save(bulletin);
@@ -75,6 +79,7 @@ public class BulletinSalaireController {
 	 * @return the model and view
 	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")
+	@Secured({ "ROLE_UTILISATEUR", "ROLE_ADMINISTRATEUR" })
 	public ModelAndView listerBulletinGet() {
 		ModelAndView mv = new ModelAndView();
 
@@ -89,6 +94,7 @@ public class BulletinSalaireController {
 	 * @return the model and view
 	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/lister")
+	@Secured({ "ROLE_UTILISATEUR", "ROLE_ADMINISTRATEUR" })
 	public ModelAndView listerBulletinPost() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:/mvc/bulletins/creer");
@@ -98,10 +104,12 @@ public class BulletinSalaireController {
 	/**
 	 * Visualiser bulletin get.
 	 *
-	 * @param bulletinId the bulletin id
+	 * @param bulletinId
+	 *            the bulletin id
 	 * @return the model and view
 	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/visualiser")
+	@Secured({ "ROLE_UTILISATEUR", "ROLE_ADMINISTRATEUR" })
 	public ModelAndView visualiserBulletinGet(@RequestParam("id") Integer bulletinId) {
 		ModelAndView mv = new ModelAndView();
 
@@ -121,6 +129,7 @@ public class BulletinSalaireController {
 	 * @return the model and view
 	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/visualiser")
+	@Secured({ "ROLE_UTILISATEUR", "ROLE_ADMINISTRATEUR" })
 	public ModelAndView visualiserBulletinPost() {
 		ModelAndView mv = new ModelAndView();
 		return mv;

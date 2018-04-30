@@ -14,11 +14,11 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 @Configuration
 
-@Import({ ServicesConfig.class })
+@Import({ ServicesConfig.class, SecurityConfig.class })
 @EnableWebMvc
 @ComponentScan({ "dev.paie.web" })
 public class WebAppConfig {
-	
+
 	/**
 	 * View resolver.
 	 *

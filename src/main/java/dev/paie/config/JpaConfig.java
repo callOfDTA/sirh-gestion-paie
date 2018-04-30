@@ -20,11 +20,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 public class JpaConfig {
-	
+
 	/**
 	 * Transaction manager.
 	 *
-	 * @param emf the emf
+	 * @param emf
+	 *            the emf
 	 * @return the platform transaction manager
 	 */
 	@Bean
@@ -37,7 +38,8 @@ public class JpaConfig {
 	/**
 	 * Entity manager factory.
 	 *
-	 * @param dataSource the data source
+	 * @param dataSource
+	 *            the data source
 	 * @return the entity manager factory
 	 */
 	@Bean
