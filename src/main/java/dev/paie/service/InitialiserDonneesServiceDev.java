@@ -6,7 +6,9 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,12 +17,16 @@ import dev.paie.entite.Entreprise;
 import dev.paie.entite.Grade;
 import dev.paie.entite.ProfilRemuneration;
 import dev.paie.entite.RemunerationEmploye;
+import dev.paie.entite.Utilisateur;
 
 @Service
 public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 
 	@PersistenceContext
 	EntityManager em;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	@Transactional
@@ -60,6 +66,9 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 		employe2.setGrade(idGrade.get("grade2"));
 		employe2.setDateCreation(LocalDateTime.now());
 		em.persist(employe2);
+		em.persist(
+				new Utilisateur("admin", passwordEncoder.encode("admin"), true, Utilisateur.ROLES.ROLE_ADMINISTRATEUR));
+		em.persist(new Utilisateur("user", passwordEncoder.encode("pass"), true, Utilisateur.ROLES.ROLE_UTILISATEUR));
 		ctx.close();
 	}
 
