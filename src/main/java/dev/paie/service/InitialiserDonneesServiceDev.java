@@ -9,7 +9,9 @@ import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +20,8 @@ import dev.paie.entite.Entreprise;
 import dev.paie.entite.Grade;
 import dev.paie.entite.Periode;
 import dev.paie.entite.ProfilRemuneration;
+import dev.paie.entite.Utilisateur;
+import dev.paie.entite.Utilisateur.ROLES;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -29,6 +33,9 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 	/** The em. */
 	@PersistenceContext
 	private EntityManager em;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	/**
 	 * Instantiates a new initialiser donnees service dev.
@@ -60,6 +67,16 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 		});
 		listPeriode.stream().forEach(em::persist);
 
+		Utilisateur user = new Utilisateur("Cyril", passwordEncoder.encode("user"), Boolean.FALSE,
+				ROLES.ROLE_UTILISATEUR);
+		Utilisateur user1 = new Utilisateur("Mehdi", passwordEncoder.encode("user1"), Boolean.TRUE,
+				ROLES.ROLE_UTILISATEUR);
+		Utilisateur admin = new Utilisateur("QUERE", passwordEncoder.encode("admin"), Boolean.FALSE,
+				ROLES.ROLE_ADMINISTRATEUR);
+		Utilisateur admin1 = new Utilisateur("ZAHOUR", passwordEncoder.encode("admin1"), Boolean.TRUE,
+				ROLES.ROLE_ADMINISTRATEUR);
+
+		Stream.of(user, user1, admin, admin1).forEach(em::persist);
 	}
 
 }

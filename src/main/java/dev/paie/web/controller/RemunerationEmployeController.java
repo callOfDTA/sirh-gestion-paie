@@ -1,6 +1,7 @@
 package dev.paie.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,8 @@ public class RemunerationEmployeController {
 	 * @return the model and view
 	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/creer")
+
+	@Secured("ROLE_ADMINISTRATEUR")
 	public ModelAndView creerEmployeGet() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("employes/creerEmploye");
@@ -58,10 +61,12 @@ public class RemunerationEmployeController {
 	/**
 	 * Creer employe post.
 	 *
-	 * @param employe the employe
+	 * @param employe
+	 *            the employe
 	 * @return the model and view
 	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/creer")
+	@Secured("ROLE_ADMINISTRATEUR")
 	public ModelAndView creerEmployePost(@ModelAttribute("RemunerationEmploye") RemunerationEmploye employe) {
 		ModelAndView mv = new ModelAndView();
 		employesRepo.save(employe);
@@ -75,6 +80,7 @@ public class RemunerationEmployeController {
 	 * @return the model and view
 	 */
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")
+	@Secured({ "ROLE_UTILISATEUR", "ROLE_ADMINISTRATEUR" })
 	public ModelAndView listerEmployeGet() {
 		ModelAndView mv = new ModelAndView();
 
@@ -89,6 +95,7 @@ public class RemunerationEmployeController {
 	 * @return the model and view
 	 */
 	@RequestMapping(method = RequestMethod.POST, path = "/lister")
+	@Secured({ "ROLE_UTILISATEUR", "ROLE_ADMINISTRATEUR" })
 	public ModelAndView listerEmployePost() {
 		ModelAndView mv = new ModelAndView();
 
