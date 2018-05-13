@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<import resource="classpath:cotisations-imposables.xml" />
+	<import resource="classpath:cotisations-non-imposables.xml" />
+
+	<bean id="bulletin1" class="dev.paie.entite.BulletinSalaire">
+		<property name="remunerationEmploye" ref="rem1"/>
+		<property name="primeExceptionnelle" value="1000"/>
+	</bean>
+	
+	<bean id="rem1" class="dev.paie.entite.RemunerationEmploye">
+		<property name="matricule" value="M01"/>
+		<property name="entreprise" ref="ent1"/>
+		<property name="profilRemuneration" ref="profil1"/>
+		<property name="grade" ref="grade1"/>
+	</bean>
+	
+	<bean id="ent1" class="dev.paie.entite.Entreprise">
+		<property name="siret" value="80966785000022"/>
+		<property name="denomination" value="Dev Entreprise"/>
+		<property name="codeNaf" value="6202A"/>
+	</bean>
+	
+	<bean id="profil1" class="dev.paie.entite.ProfilRemuneration">
+		<property name="cotisationsNonImposables">
+			<util:list value-type="dev.paie.entite.Cotisation">
+				<ref bean="ep01" />
+				<ref bean="ep02" />
+				<ref bean="ep03" />
+				<ref bean="ep04" />
+				<ref bean="ep05" />
+				<ref bean="ep06" />
+				<ref bean="ep07" />
+				<ref bean="ep12" />
+				<ref bean="ep19" />
+				<ref bean="ep20" />
+				<ref bean="epr1" />
+				<ref bean="ep20" />
+				<ref bean="e900" />
+				<ref bean="ep28" />
+				<ref bean="ep37" />
+			</util:list>
+		</property>
+		<property name="cotisationsImposables">
+			<util:list value-type="dev.paie.entite.Cotisation">
+				<ref bean="sp01" />
+				<ref bean="sp02" />
+			</util:list>
+		</property>
+	</bean>
+	
+	<bean id="grade1" class="dev.paie.entite.Grade">
+		<property name="nbHeuresBase" value="151.67"/>
+		<property name="tauxBase" value="11.0984"/>
+	</bean>
+
+</beans>
